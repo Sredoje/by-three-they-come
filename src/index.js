@@ -1,29 +1,26 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import './index.css';
-import 'antd/dist/reset.css';
-import reportWebVitals from './reportWebVitals';
-import {
-  createBrowserRouter,
-  RouterProvider,
-} from "react-router-dom";
-import Root from './pages/root';
-import ErrorPage from './error-page';
-import IndexPage from './pages/indexPage/indexPage';
-import LoginPage from './pages/loginPage/loginPage';
+import React from "react";
+import ReactDOM from "react-dom/client";
+import "./index.css";
+import "antd/dist/reset.css";
+import reportWebVitals from "./reportWebVitals";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import Root from "./pages/root";
+import ErrorPage from "./error-page";
+import IndexPage from "./pages/indexPage/indexPage";
+import LoginPage from "./pages/loginPage/loginPage";
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <Root/>,
+    element: <Root />,
     errorElement: <ErrorPage />,
     children: [
       { index: true, element: <IndexPage /> },
-      { path: 'login', element: <LoginPage></LoginPage>}
+      { path: "login", element: <LoginPage></LoginPage> },
     ],
   },
 ]);
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
+const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
     <RouterProvider router={router} />
