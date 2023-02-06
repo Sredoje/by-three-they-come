@@ -12,7 +12,7 @@ export default function Root() {
         <Layout>
           <Content className="content"><Outlet /></Content>
         </Layout>
-        <FooterWrapper></FooterWrapper>
+        {/* <FooterWrapper></FooterWrapper> */}
         </Layout>
       </>
     );
