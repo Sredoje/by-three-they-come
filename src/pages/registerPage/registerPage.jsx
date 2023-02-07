@@ -42,6 +42,7 @@ function RegisterPage() {
                   message: "Please input your password!",
                 },
               ]}
+              hasFeedback
             >
               <Input.Password
                 size="large"
@@ -49,24 +50,43 @@ function RegisterPage() {
                 prefix={<LockOutlined />}
               />
             </Form.Item>
+
             <Form.Item
-              name="password"
+              name="confirm"
+              dependencies={["password"]}
+              hasFeedback
               rules={[
                 {
                   required: true,
-                  message: "Please input your password!",
+                  message: "Please confirm your password!",
                 },
+                ({ getFieldValue }) => ({
+                  validator(_, value) {
+                    if (!value || getFieldValue("password") === value) {
+                      return Promise.resolve();
+                    }
+                    return Promise.reject(
+                      new Error(
+                        "The two passwords that you entered do not match!"
+                      )
+                    );
+                  },
+                }),
               ]}
             >
               <Input.Password
                 size="large"
-                placeholder="Password"
+                placeholder="Confirm Password"
                 prefix={<LockOutlined />}
               />
             </Form.Item>
             <Form.Item>
-              <Button type="primary" htmlType="submit">
-                Login
+              <Button
+                type="primary"
+                htmlType="submit"
+                className="register-form-button"
+              >
+                Register
               </Button>
             </Form.Item>
           </Form>
@@ -75,4 +95,4 @@ function RegisterPage() {
     </>
   );
 }
-export default LoginPage;
+export default RegisterPage;

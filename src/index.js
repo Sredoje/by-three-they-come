@@ -8,6 +8,7 @@ import Root from "./pages/root";
 import ErrorPage from "./error-page";
 import IndexPage from "./pages/indexPage/indexPage";
 import LoginPage from "./pages/loginPage/loginPage";
+import RegisterPage from "./pages/registerPage/registerPage";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -16,6 +17,7 @@ const router = createBrowserRouter([
     children: [
       { index: true, element: <IndexPage /> },
       { path: "login", element: <LoginPage></LoginPage> },
+      { path: "register", element: <RegisterPage></RegisterPage> },
     ],
   },
 ]);
