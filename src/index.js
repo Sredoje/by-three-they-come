@@ -9,6 +9,11 @@ import ErrorPage from "./error-page";
 import IndexPage from "./pages/indexPage/indexPage";
 import LoginPage from "./pages/loginPage/loginPage";
 import RegisterPage from "./pages/registerPage/registerPage";
+import UploadPicturesPage from "./pages/myProfilePage/uploadPicturesPage/uploadPicturesPage";
+import ReportsPage from "./pages/myProfilePage/reportsPage/reportsPage";
+import AccountInfoPage from "./pages/myProfilePage/accountInfoPage/accountInfoPage";
+
+// After adding a route, be sure to update header.jsx
 const router = createBrowserRouter([
   {
     path: "/",
@@ -18,6 +23,24 @@ const router = createBrowserRouter([
       { index: true, element: <IndexPage /> },
       { path: "login", element: <LoginPage></LoginPage> },
       { path: "register", element: <RegisterPage></RegisterPage> },
+      {
+        path: "my-profile",
+        // element: <MyProfilePage></MyProfilePage>,
+        children: [
+          {
+            path: "account-info",
+            element: <AccountInfoPage></AccountInfoPage>,
+          },
+          {
+            path: "upload-pictures",
+            element: <UploadPicturesPage></UploadPicturesPage>,
+          },
+          {
+            path: "reports",
+            element: <ReportsPage></ReportsPage>,
+          },
+        ],
+      },
     ],
   },
 ]);

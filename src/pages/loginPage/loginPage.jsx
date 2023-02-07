@@ -10,7 +10,7 @@ function LoginPage() {
   };
   return (
     <>
-      <Row align="center">
+      <Row align="center" className="loginRow">
         <Col>
           <Form
             name="basic"

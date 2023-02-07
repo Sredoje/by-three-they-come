@@ -1,5 +1,6 @@
 import { Input, Row, Col, Form, Button } from "antd";
 import { UserOutlined, LockOutlined } from "@ant-design/icons";
+import "./registerPage.css";
 function RegisterPage() {
   const onFinish = (values) => {
     console.log("Success:", values);
@@ -9,7 +10,7 @@ function RegisterPage() {
   };
   return (
     <>
-      <Row align="center">
+      <Row align="center" className="registerRow">
         <Col>
           <Form
             name="basic"
