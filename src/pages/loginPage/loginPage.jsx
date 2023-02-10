@@ -1,8 +1,9 @@
 import { Input, Row, Col, Form, Button, Checkbox } from "antd";
-import { UserOutlined, LockOutlined } from "@ant-design/icons";
+import { LockOutlined, MailOutlined } from "@ant-design/icons";
 import "./loginPage.css";
 function LoginPage() {
   const onFinish = (values) => {
+    console.log("USAO OVDE");
     console.log("Success:", values);
   };
   const onFinishFailed = (errorInfo) => {
@@ -20,18 +21,22 @@ function LoginPage() {
             autoComplete="off"
           >
             <Form.Item
-              name="username"
+              name="email"
               rules={[
                 {
+                  type: "email",
+                  message: "The input is not valid E-mail!",
+                },
+                {
                   required: true,
-                  message: "Please input your username!",
+                  message: "Please input your E-mail!",
                 },
               ]}
             >
               <Input
                 size="large"
-                placeholder="Username"
-                prefix={<UserOutlined />}
+                placeholder="Email"
+                prefix={<MailOutlined></MailOutlined>}
               />
             </Form.Item>
 
@@ -67,7 +72,7 @@ function LoginPage() {
               >
                 Log in
               </Button>
-              Or <a href="">register now!</a>
+              Or <a href="/register">register now!</a>
             </Form.Item>
           </Form>
         </Col>

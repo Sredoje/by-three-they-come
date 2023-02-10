@@ -1,15 +1,37 @@
-import { Input, Row, Col, Form, Button } from "antd";
-import { UserOutlined, LockOutlined } from "@ant-design/icons";
+import { Input, Row, Col, Form, Button, message } from "antd";
+import { UserOutlined, LockOutlined, MailOutlined } from "@ant-design/icons";
+import UserApi from "../../api/userApi";
+import UserSessionHelper from "../../helpers/userSessionHelper";
 import "./registerPage.css";
 function RegisterPage() {
+  const [messageApi, contextHolder] = message.useMessage();
+
   const onFinish = (values) => {
-    console.log("Success:", values);
+    UserApi.createUser(values.username, values.password, values.email)
+      .then((response) => {
+        console.log(response);
+        UserSessionHelper.setUser(response.user);
+        UserSessionHelper.setToken(response.token);
+        console.log("IME JE", UserSessionHelper.getName());
+        messageApi.open({
+          type: "success",
+          content: "Sucesffully created user: " + values.username,
+        });
+      })
+      .catch((error) => {
+        messageApi.open({
+          type: "error",
+          content: error.message,
+        });
+      });
   };
   const onFinishFailed = (errorInfo) => {
     console.log("Failed:", errorInfo);
   };
+
   return (
     <>
+      {contextHolder}
       <Row align="center" className="registerRow">
         <Col>
           <Form
@@ -34,7 +56,25 @@ function RegisterPage() {
                 prefix={<UserOutlined />}
               />
             </Form.Item>
-
+            <Form.Item
+              name="email"
+              rules={[
+                {
+                  type: "email",
+                  message: "The input is not valid E-mail!",
+                },
+                {
+                  required: true,
+                  message: "Please input your E-mail!",
+                },
+              ]}
+            >
+              <Input
+                size="large"
+                placeholder="Email"
+                prefix={<MailOutlined />}
+              />
+            </Form.Item>
             <Form.Item
               name="password"
               rules={[

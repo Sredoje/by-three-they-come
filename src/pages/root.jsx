@@ -14,7 +14,7 @@ export default function Root() {
             <Outlet />
           </Content>
         </Layout>
-        {/* <FooterWrapper></FooterWrapper> */}
+        <FooterWrapper></FooterWrapper>
       </Layout>
     </>
   );

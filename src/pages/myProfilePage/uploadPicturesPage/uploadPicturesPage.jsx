@@ -3,7 +3,7 @@ import { Modal, Upload, Row, Col, Button, Form } from "antd";
 import { useState } from "react";
 
 // Express side of upload https://github.com/react-component/upload/blob/master/server.js
-
+// https://levelup.gitconnected.com/managing-file-uploads-with-ant-design-6d78e592f2c4
 function UploadPicturesPage() {
   const getBase64 = (file) =>
     new Promise((resolve, reject) => {
@@ -60,6 +60,7 @@ function UploadPicturesPage() {
   );
 
   const dummyRequest = ({ file, onSuccess }) => {
+    // Here we need to handle actual upload
     setTimeout(() => {
       onSuccess("ok");
     }, 0);
@@ -86,7 +87,7 @@ function UploadPicturesPage() {
   };
   return (
     <>
-      <div>This is Upload picture page asdasdasdas, ADD FORM ELEMENT</div>
+      <div>This is Upload picture page asdasdasdas, ADD MY POSTS</div>
       <Form
         labelCol={{ span: 4 }}
         wrapperCol={{ span: 14 }}

@@ -1,5 +1,13 @@
-.footer {
+.ant-layout-footer {
   text-align: "center";
   color: "#fff";
-  background-color: "#7dbcea";
+  text-align: "center";
+  color: "#fff";
+  height: 64;
+  padding-inline: 50;
+  line-height: "64px";
+  background-color: "#7dbcea" !important;
+}
+.ant-layout .ant-layout-footer {
+  background-color: "#ffffff" !important;
 }
