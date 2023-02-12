@@ -12,6 +12,7 @@ import RegisterPage from "./pages/registerPage/registerPage";
 import UploadPicturesPage from "./pages/myProfilePage/uploadPicturesPage/uploadPicturesPage";
 import ReportsPage from "./pages/myProfilePage/reportsPage/reportsPage";
 import AccountInfoPage from "./pages/myProfilePage/accountInfoPage/accountInfoPage";
+import LogoutPage from "./pages/logoutPage/logoutPage";
 
 // After adding a route, be sure to update header.jsx
 const router = createBrowserRouter([
@@ -23,6 +24,7 @@ const router = createBrowserRouter([
       { index: true, element: <IndexPage /> },
       { path: "login", element: <LoginPage></LoginPage> },
       { path: "register", element: <RegisterPage></RegisterPage> },
+      { path: "logout", element: <LogoutPage></LogoutPage> },
       {
         path: "my-profile",
         // element: <MyProfilePage></MyProfilePage>,

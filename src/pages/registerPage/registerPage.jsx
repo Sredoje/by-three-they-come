@@ -38,7 +38,6 @@ function RegisterPage() {
 
   return (
     <>
-      Is logged in: {isLoggedIn ? "true" : "false"}
       {contextHolder}
       <Row align="center" className="registerRow">
         <Col>

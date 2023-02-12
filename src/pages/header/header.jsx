@@ -14,47 +14,21 @@ function HeaderWrapper() {
   const splitLocation = pathname.split("/");
   let newKey;
   let currentpage = splitLocation[1];
-  // Workaround so we can set antd menu key to properly reflect React router active key
-  if (currentpage === "") {
-    newKey = "0";
-  } else if (currentpage === "login") {
-    newKey = "1";
-  } else if (currentpage === "register") {
-    newKey = "2";
-  } else if (currentpage === "my-profile") {
-    newKey = "3";
 
-    let subNode = splitLocation[2];
-    if (subNode) {
-      if (subNode === "account-info") {
-        newKey = "myProfile:account-info";
-      }
-      if (subNode === "upload-pictures") {
-        newKey = "myProfile:upload-pictures";
-      }
-      if (subNode === "reports") {
-        newKey = "myProfile:reports";
-      }
-    }
-  }
-  if (newKey !== selectedKey) {
-    setSelectedKey(newKey);
-  }
+  let login = {
+    key: 1,
+    label: <NavLink to={"/login"}>{"Login"}</NavLink>,
+  };
 
-  const items = [
-    {
-      key: 0,
-      label: <NavLink to={"/"}>{"View all"}</NavLink>,
-    },
-    {
-      key: 1,
-      label: <NavLink to={"/login"}>{"Login"}</NavLink>,
-    },
-    {
-      key: 2,
-      label: <NavLink to={"/register"}>{"Register"}</NavLink>,
-    },
-  ];
+  let logout = {
+    key: 1,
+    label: <NavLink to={"/logout"}>{"Logout"}</NavLink>,
+  };
+
+  let register = {
+    key: 2,
+    label: <NavLink to={"/register"}>{"Register"}</NavLink>,
+  };
 
   let myProfile = {
     key: 3,
@@ -81,8 +55,46 @@ function HeaderWrapper() {
       },
     ],
   };
+
+  const items = [
+    {
+      key: 0,
+      label: <NavLink to={"/"}>{"View all"}</NavLink>,
+    },
+  ];
+
+  // Hiding menu items based on logged in flag
   if (isLoggedIn) {
-    items.push(myProfile);
+    items.push(myProfile, logout);
+  } else {
+    items.push(login, register);
+  }
+
+  // Workaround so we can set antd menu key to properly reflect React router active key
+  if (currentpage === "") {
+    newKey = "0";
+  } else if (currentpage === "login") {
+    newKey = login.key.toString();
+  } else if (currentpage === "register") {
+    newKey = register.key.toString();
+  } else if (currentpage === "my-profile") {
+    newKey = myProfile.key.toString();
+
+    let subNode = splitLocation[2];
+    if (subNode) {
+      if (subNode === "account-info") {
+        newKey = "myProfile:account-info";
+      }
+      if (subNode === "upload-pictures") {
+        newKey = "myProfile:upload-pictures";
+      }
+      if (subNode === "reports") {
+        newKey = "myProfile:reports";
+      }
+    }
+  }
+  if (newKey !== selectedKey) {
+    setSelectedKey(newKey);
   }
   const onClick = (e) => {
     setSelectedKey(e.key);

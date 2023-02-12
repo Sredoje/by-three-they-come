@@ -26,6 +26,10 @@ const UserSessionHelper = {
       return true;
     }
   },
+  clearStorage: () => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
+  },
 };
 
 export default UserSessionHelper;

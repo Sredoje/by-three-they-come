@@ -14,7 +14,7 @@ function LoginPage() {
     navigate("/");
   }
   const onFinish = (values) => {
-    UserApi.createUser(values.username, values.password, values.email)
+    UserApi.loginUser(values.email, values.password)
       .then((response) => {
         UserSessionHelper.setUser(response.user);
         UserSessionHelper.setToken(response.token);
@@ -36,6 +36,7 @@ function LoginPage() {
 
   return (
     <>
+      {contextHolder}
       <Row align="center" className="loginRow">
         <Col>
           <Form
