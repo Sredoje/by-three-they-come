@@ -1,13 +1,14 @@
 import React from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
 import "./header.css";
 import { Layout, Menu } from "antd";
-import { useLocation } from "react-router-dom";
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { SettingOutlined } from "@ant-design/icons";
+import { LoggedInContext } from "../../context/loggedInContext";
 const { Header } = Layout;
 function HeaderWrapper() {
   let [selectedKey, setSelectedKey] = useState("0");
+  const { isLoggedIn } = useContext(LoggedInContext);
   const location = useLocation();
   const { pathname } = location;
   const splitLocation = pathname.split("/");
@@ -53,34 +54,37 @@ function HeaderWrapper() {
       key: 2,
       label: <NavLink to={"/register"}>{"Register"}</NavLink>,
     },
-    {
-      key: 3,
-      label: "My Profile",
-      icon: <SettingOutlined />,
-      children: [
-        {
-          label: (
-            <NavLink to={"/my-profile/account-info"}>{"Account info"}</NavLink>
-          ),
-          key: "myProfile:account-info",
-        },
-        {
-          label: (
-            <NavLink to={"/my-profile/upload-pictures"}>
-              {"Upload pictures"}
-            </NavLink>
-          ),
-          key: "myProfile:upload-pictures",
-        },
-        {
-          label: <NavLink to={"/my-profile/reports"}>{"Report"}</NavLink>,
-          key: "myProfile:reports",
-        },
-      ],
-    },
   ];
+
+  let myProfile = {
+    key: 3,
+    label: "My Profile",
+    icon: <SettingOutlined />,
+    children: [
+      {
+        label: (
+          <NavLink to={"/my-profile/account-info"}>{"Account info"}</NavLink>
+        ),
+        key: "myProfile:account-info",
+      },
+      {
+        label: (
+          <NavLink to={"/my-profile/upload-pictures"}>
+            {"Upload pictures"}
+          </NavLink>
+        ),
+        key: "myProfile:upload-pictures",
+      },
+      {
+        label: <NavLink to={"/my-profile/reports"}>{"Report"}</NavLink>,
+        key: "myProfile:reports",
+      },
+    ],
+  };
+  if (isLoggedIn) {
+    items.push(myProfile);
+  }
   const onClick = (e) => {
-    console.log("click ", e);
     setSelectedKey(e.key);
   };
 

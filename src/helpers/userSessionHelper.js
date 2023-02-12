@@ -17,6 +17,15 @@ const UserSessionHelper = {
   setToken: (token) => {
     localStorage.setItem("token", token);
   },
+  isLoggedIn: () => {
+    let token = localStorage.getItem("token");
+    console.log(token);
+    if (token == null) {
+      return false;
+    } else {
+      return true;
+    }
+  },
 };
 
 export default UserSessionHelper;

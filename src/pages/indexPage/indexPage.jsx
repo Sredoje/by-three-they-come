@@ -15,7 +15,9 @@ function IndexPage() {
           <h1>By three they come</h1>
           <h1>
             Figoure out different scheemas, do we show 3, do we preview ? How
-            will it look on mobile
+            will it look on mobile @TODO: 1. Create posts 2. Post have 3 images,
+            one is locked 3. Create score system ( each new user has 2000 score,
+            and he can unlock images with it)
           </h1>
           <Carousel
             arrows={true}

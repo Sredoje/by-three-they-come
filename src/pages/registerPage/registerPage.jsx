@@ -3,26 +3,33 @@ import { UserOutlined, LockOutlined, MailOutlined } from "@ant-design/icons";
 import UserApi from "../../api/userApi";
 import UserSessionHelper from "../../helpers/userSessionHelper";
 import "./registerPage.css";
+import React from "react";
+import LoggedInContext from "../../context/loggedInContext";
+import { useContext } from "react";
+import { useNavigate } from "react-router-dom";
 function RegisterPage() {
   const [messageApi, contextHolder] = message.useMessage();
+  const { isLoggedIn, setIsLoggedIn } = useContext(LoggedInContext);
+  const navigate = useNavigate();
 
   const onFinish = (values) => {
     UserApi.createUser(values.username, values.password, values.email)
       .then((response) => {
-        console.log(response);
         UserSessionHelper.setUser(response.user);
         UserSessionHelper.setToken(response.token);
-        console.log("IME JE", UserSessionHelper.getName());
         messageApi.open({
           type: "success",
-          content: "Sucesffully created user: " + values.username,
+          content: "Sucesffully created account!" + values.username,
         });
+        setIsLoggedIn(true);
+        navigate("/");
       })
       .catch((error) => {
         messageApi.open({
           type: "error",
           content: error.message,
         });
+        setIsLoggedIn(false);
       });
   };
   const onFinishFailed = (errorInfo) => {
@@ -31,6 +38,7 @@ function RegisterPage() {
 
   return (
     <>
+      Is logged in: {isLoggedIn ? "true" : "false"}
       {contextHolder}
       <Row align="center" className="registerRow">
         <Col>
