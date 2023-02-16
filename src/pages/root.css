@@ -1,7 +1,7 @@
 .content {
-  text-align: "center";
+  text-align: 'center';
   min-height: 120;
-  line-height: "120px";
-  color: "#fff";
-  background-color: "#108ee9";
+  line-height: '120px';
+  color: '#fff';
+  background-color: rgb(240, 242, 245);
 }

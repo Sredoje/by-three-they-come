@@ -1,57 +1,59 @@
-import React from "react";
-import { NavLink, useLocation } from "react-router-dom";
-import "./header.css";
-import { Layout, Menu } from "antd";
-import { useState, useContext } from "react";
-import { SettingOutlined } from "@ant-design/icons";
-import { LoggedInContext } from "../../context/loggedInContext";
+import React from 'react';
+import { NavLink, useLocation } from 'react-router-dom';
+import './header.css';
+import { Layout, Menu } from 'antd';
+import { useState, useContext } from 'react';
+import { SettingOutlined } from '@ant-design/icons';
+import { LoggedInContext } from '../../context/loggedInContext';
 const { Header } = Layout;
 function HeaderWrapper() {
-  let [selectedKey, setSelectedKey] = useState("0");
+  let [selectedKey, setSelectedKey] = useState('0');
   const { isLoggedIn } = useContext(LoggedInContext);
   const location = useLocation();
   const { pathname } = location;
-  const splitLocation = pathname.split("/");
+  const splitLocation = pathname.split('/');
   let newKey;
   let currentpage = splitLocation[1];
 
   let login = {
     key: 1,
-    label: <NavLink to={"/login"}>{"Login"}</NavLink>,
+    label: <NavLink to={'/login'}>{'Login'}</NavLink>,
   };
 
   let logout = {
     key: 1,
-    label: <NavLink to={"/logout"}>{"Logout"}</NavLink>,
+    label: <NavLink to={'/logout'}>{'Logout'}</NavLink>,
   };
 
   let register = {
     key: 2,
-    label: <NavLink to={"/register"}>{"Register"}</NavLink>,
+    label: <NavLink to={'/register'}>{'Register'}</NavLink>,
   };
 
   let myProfile = {
     key: 3,
-    label: "My Profile",
+    label: 'My Profile',
     icon: <SettingOutlined />,
     children: [
       {
         label: (
-          <NavLink to={"/my-profile/account-info"}>{"Account info"}</NavLink>
+          <NavLink to={'/my-profile/account-info'}>{'Account info'}</NavLink>
         ),
-        key: "myProfile:account-info",
+        key: 'myProfile:account-info',
       },
       {
         label: (
-          <NavLink to={"/my-profile/upload-pictures"}>
-            {"Upload pictures"}
-          </NavLink>
+          <NavLink to={'/my-profile/create-new-post'}>{'New Post'}</NavLink>
         ),
-        key: "myProfile:upload-pictures",
+        key: 'myProfile:create-new-post',
       },
       {
-        label: <NavLink to={"/my-profile/reports"}>{"Report"}</NavLink>,
-        key: "myProfile:reports",
+        label: <NavLink to={'/my-profile/reports'}>{'Report'}</NavLink>,
+        key: 'myProfile:reports',
+      },
+      {
+        label: <NavLink to={'/my-profile/my-posts'}>{'My Posts'}</NavLink>,
+        key: 'myProfile:my-posts',
       },
     ],
   };
@@ -59,7 +61,7 @@ function HeaderWrapper() {
   const items = [
     {
       key: 0,
-      label: <NavLink to={"/"}>{"View all"}</NavLink>,
+      label: <NavLink to={'/'}>{'View all'}</NavLink>,
     },
   ];
 
@@ -71,25 +73,28 @@ function HeaderWrapper() {
   }
 
   // Workaround so we can set antd menu key to properly reflect React router active key
-  if (currentpage === "") {
-    newKey = "0";
-  } else if (currentpage === "login") {
+  if (currentpage === '') {
+    newKey = '0';
+  } else if (currentpage === 'login') {
     newKey = login.key.toString();
-  } else if (currentpage === "register") {
+  } else if (currentpage === 'register') {
     newKey = register.key.toString();
-  } else if (currentpage === "my-profile") {
+  } else if (currentpage === 'my-profile') {
     newKey = myProfile.key.toString();
 
     let subNode = splitLocation[2];
     if (subNode) {
-      if (subNode === "account-info") {
-        newKey = "myProfile:account-info";
+      if (subNode === 'account-info') {
+        newKey = 'myProfile:account-info';
       }
-      if (subNode === "upload-pictures") {
-        newKey = "myProfile:upload-pictures";
+      if (subNode === 'upload-pictures') {
+        newKey = 'myProfile:upload-pictures';
       }
-      if (subNode === "reports") {
-        newKey = "myProfile:reports";
+      if (subNode === 'reports') {
+        newKey = 'myProfile:reports';
+      }
+      if (subNode === 'my-posts') {
+        newKey = 'myProfile:my-posts';
       }
     }
   }

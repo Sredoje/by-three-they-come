@@ -4,7 +4,6 @@ import FooterWrapper from "./footer/footer";
 import { Outlet } from "react-router-dom";
 import { Layout } from "antd";
 import { LoggedInContext } from "../context/loggedInContext";
-import UserSessionHelper from "../helpers/userSessionHelper";
 import { useState } from "react";
 const { Content } = Layout;
 export default function Root() {

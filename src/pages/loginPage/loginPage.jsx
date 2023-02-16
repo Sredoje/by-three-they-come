@@ -6,6 +6,7 @@ import { LoggedInContext } from "../../context/loggedInContext";
 import { useNavigate } from "react-router-dom";
 import UserSessionHelper from "../../helpers/userSessionHelper";
 import UserApi from "../../api/userApi";
+import { NavLink } from "react-router-dom";
 function LoginPage() {
   const { isLoggedIn, setIsLoggedIn } = useContext(LoggedInContext);
   const [messageApi, contextHolder] = message.useMessage();
@@ -97,7 +98,7 @@ function LoginPage() {
               >
                 Log in
               </Button>
-              Or <a href="/register">register now!</a>
+              Or <NavLink to={"/register"}>{"register now!"}</NavLink>
             </Form.Item>
           </Form>
         </Col>
