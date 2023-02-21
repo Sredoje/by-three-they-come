@@ -2,10 +2,12 @@ import { PlusOutlined } from '@ant-design/icons';
 import { Modal, Upload, Row, Col, Button, Form, message } from 'antd';
 import { useState } from 'react';
 import PostApi from '../../../api/postApi';
+import { useNavigate } from 'react-router-dom';
 
 // Express side of upload https://github.com/react-component/upload/blob/master/server.js
 // https://levelup.gitconnected.com/managing-file-uploads-with-ant-design-6d78e592f2c4
 function CreateNewPostPage() {
+  const navigate = useNavigate();
   const getBase64 = (file) =>
     new Promise((resolve, reject) => {
       const reader = new FileReader();
@@ -41,17 +43,15 @@ function CreateNewPostPage() {
     // 👇 Create new FormData object and append files
     const data = new FormData();
     fileList.map((file, i) => {
-      console.log(file);
       data.append(`file-${i}`, file.originFileObj, file.name);
+      return file;
     });
     PostApi.createPost(data);
     messageApi.open({
       type: 'success',
       content: 'Sucesffully uploaded picture!',
     });
-
-    // REDIRECT TO POST
-    // console.log(values, 'THIS IS FINISH');
+    navigate('/my-profile/my-posts');
   };
   const handleChange = ({ fileList: newFileList }) => setFileList(newFileList);
 
