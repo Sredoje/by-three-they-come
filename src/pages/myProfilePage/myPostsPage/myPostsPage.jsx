@@ -20,8 +20,8 @@ function getAWSUrl(key) {
 }
 
 function MyPostsPage() {
-  function handleDeletePost(postForDelete) {
-    // ENDPOINT FOR DELETING
+  async function handleDeletePost(postForDelete) {
+    await PostApi.deletePost(postForDelete.id);
     let newPosts = posts.filter((post) => {
       return post.id !== postForDelete.id;
     });
@@ -50,13 +50,14 @@ function MyPostsPage() {
     {
       title: 'Images',
       dataIndex: 'PostItems',
-      key: 'PostItems',
+      // key: 'id',
       render: (_, { PostItems, status }) => (
         <>
           <Space align={'center'} size={20}>
             {PostItems.map((item) => {
               return (
                 <Card
+                  key={item.id}
                   actions={[
                     status === 'draft' ? (
                       <div>Hide picture under paywall</div>
@@ -66,7 +67,7 @@ function MyPostsPage() {
                   ]}
                   style={{ width: 200 }}
                 >
-                  <Image src={item.publicUrl} />
+                  <Image ket={item.publicUrl} src={item.publicUrl} />
                 </Card>
               );
             })}

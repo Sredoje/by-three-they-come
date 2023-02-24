@@ -42,10 +42,8 @@ function HeaderWrapper() {
         key: 'myProfile:account-info',
       },
       {
-        label: (
-          <NavLink to={'/my-profile/create-new-post'}>{'New Post'}</NavLink>
-        ),
-        key: 'myProfile:create-new-post',
+        label: <NavLink to={'/my-profile/new-post'}>{'New Post'}</NavLink>,
+        key: 'myProfile:new-post',
       },
       {
         label: <NavLink to={'/my-profile/reports'}>{'Report'}</NavLink>,
@@ -95,6 +93,9 @@ function HeaderWrapper() {
       }
       if (subNode === 'my-posts') {
         newKey = 'myProfile:my-posts';
+      }
+      if (subNode === 'new-post') {
+        newKey = 'myProfile:new-post';
       }
     }
   }

@@ -35,7 +35,7 @@ const router = createBrowserRouter([
             element: <AccountInfoPage></AccountInfoPage>,
           },
           {
-            path: 'create-new-post',
+            path: 'new-post',
             element: <CreateNewPostPage></CreateNewPostPage>,
           },
           {

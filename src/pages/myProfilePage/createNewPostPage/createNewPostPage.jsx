@@ -34,7 +34,7 @@ function CreateNewPostPage() {
     );
   };
 
-  const handleFinish = (values) => {
+  const handleFinish = async (values) => {
     let fileList = values.upload;
     if (!fileList) {
       return;
@@ -46,7 +46,7 @@ function CreateNewPostPage() {
       data.append(`file-${i}`, file.originFileObj, file.name);
       return file;
     });
-    PostApi.createPost(data);
+    await PostApi.createPost(data);
     messageApi.open({
       type: 'success',
       content: 'Sucesffully uploaded picture!',
