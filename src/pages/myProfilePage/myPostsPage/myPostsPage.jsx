@@ -1,6 +1,7 @@
 import PostApi from '../../../api/postApi';
-import { useState, useEffect } from 'react';
-import { Card, Image, Button, Typography, Space, Table, Tag } from 'antd';
+import { useState, useEffect, Suspense } from 'react';
+import ItemHolder from './itemHolder';
+import { Button, Typography, Space, Table, Tag, message } from 'antd';
 let AWS = require('aws-sdk');
 
 AWS.config.update({
@@ -18,15 +19,30 @@ function getAWSUrl(key) {
 
   return result;
 }
+function Loading() {
+  return <h2>🌀 Loading...</h2>;
+}
 
 function MyPostsPage() {
+  const [posts, setPosts] = useState([]);
+  const [messageApi, contextHolder] = message.useMessage();
+
+  function hasLockedItem(postItems) {
+    return postItems.some((postItem) => postItem.status === 'locked');
+  }
+
   async function handleDeletePost(postForDelete) {
     await PostApi.deletePost(postForDelete.id);
     let newPosts = posts.filter((post) => {
       return post.id !== postForDelete.id;
     });
+    messageApi.open({
+      type: 'success',
+      content: 'Sucesffully deleted post!',
+    });
     setPosts(newPosts);
   }
+
   const columns = [
     {
       title: 'ID',
@@ -50,25 +66,19 @@ function MyPostsPage() {
     {
       title: 'Images',
       dataIndex: 'PostItems',
-      // key: 'id',
       render: (_, { PostItems, status }) => (
         <>
           <Space align={'center'} size={20}>
             {PostItems.map((item) => {
               return (
-                <Card
+                <ItemHolder
                   key={item.id}
-                  actions={[
-                    status === 'draft' ? (
-                      <div>Hide picture under paywall</div>
-                    ) : (
-                      ''
-                    ),
-                  ]}
-                  style={{ width: 200 }}
-                >
-                  <Image ket={item.publicUrl} src={item.publicUrl} />
-                </Card>
+                  item={item}
+                  status={status}
+                  setPosts={setPosts}
+                  posts={posts}
+                  hasLockedItem={hasLockedItem(PostItems)}
+                ></ItemHolder>
               );
             })}
           </Space>
@@ -98,7 +108,6 @@ function MyPostsPage() {
       ),
     },
   ];
-  const [posts, setPosts] = useState([]);
 
   useEffect(() => {
     // fetch data
@@ -124,23 +133,26 @@ function MyPostsPage() {
   }, []);
   return (
     <>
-      <Typography.Title
-        level={2}
-        style={{
-          margin: '25px 0 50px 0',
-        }}
-        align="center"
-      >
-        List of your all posts, here you can publish your posts and you can
-        remove posts that you don't like - Add locking of the postImage ( any
-        can be locked as far as its in draft) ( check user) - Add removing of
-        the post - Add publishing of the post
-      </Typography.Title>
-      <Table
-        columns={columns}
-        dataSource={posts}
-        rowKey={(record) => record.id}
-      />
+      <Suspense fallback={<Loading />}>
+        {contextHolder}
+        <Typography.Title
+          level={2}
+          style={{
+            margin: '25px 0 50px 0',
+          }}
+          align="center"
+        >
+          List of your all posts, here you can publish your posts and you can
+          remove posts that you don't like - Add locking of the postImage ( any
+          can be locked as far as its in draft) ( check user) - Add removing of
+          the post - Add publishing of the post
+        </Typography.Title>
+        <Table
+          columns={columns}
+          dataSource={posts}
+          rowKey={(record) => record.id}
+        />
+      </Suspense>
     </>
   );
 }
