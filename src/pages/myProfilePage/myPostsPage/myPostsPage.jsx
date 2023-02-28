@@ -170,10 +170,7 @@ function MyPostsPage() {
           }}
           align="center"
         >
-          List of your all posts, here you can publish your posts and you can
-          remove posts that you don't like - Add locking of the postImage ( any
-          can be locked as far as its in draft) ( check user) - Add removing of
-          the post - Add publishing of the post
+          All your posts
         </Typography.Title>
         <Table
           columns={columns}
