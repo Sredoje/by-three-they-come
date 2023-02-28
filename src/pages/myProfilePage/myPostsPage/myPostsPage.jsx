@@ -31,6 +31,27 @@ function MyPostsPage() {
     return postItems.some((postItem) => postItem.status === 'locked');
   }
 
+  async function handlePublishPost(post) {
+    let response = await PostApi.publishPost(post.id);
+
+    let newPosts = posts.map((unchangedPost) => {
+      if (unchangedPost.id === response.post.id) {
+        return response.post;
+      }
+      return unchangedPost;
+    });
+
+    messageApi.open({
+      type: 'success',
+      content: 'Sucesffully published post!',
+    });
+    setPosts(newPosts);
+  }
+
+  function isAvaliableForPublishing(post) {
+    return post.status === 'draft' && hasLockedItem(post.PostItems);
+  }
+
   async function handleDeletePost(postForDelete) {
     await PostApi.deletePost(postForDelete.id);
     let newPosts = posts.filter((post) => {
@@ -78,6 +99,7 @@ function MyPostsPage() {
                   setPosts={setPosts}
                   posts={posts}
                   hasLockedItem={hasLockedItem(PostItems)}
+                  getAWSUrl={getAWSUrl}
                 ></ItemHolder>
               );
             })}
@@ -91,7 +113,13 @@ function MyPostsPage() {
       render: (_, post) => (
         <Space>
           {post.status === 'draft' ? (
-            <Button type="primary">Publish post</Button>
+            <Button
+              type="primary"
+              onClick={() => handlePublishPost(post)}
+              disabled={!isAvaliableForPublishing(post)}
+            >
+              Publish post
+            </Button>
           ) : (
             ''
           )}

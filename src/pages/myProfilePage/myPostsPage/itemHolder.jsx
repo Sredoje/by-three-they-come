@@ -8,13 +8,21 @@ function ItemHolder({
   setPosts,
   posts,
   hasLockedItem,
+  getAWSUrl,
 }) {
   const [item, setItem] = useState(propItem);
   const { success } = message;
 
   useEffect(() => {
-    setItem(propItem);
-  }, [propItem]);
+    async function fetchUrls() {
+      if (!propItem.publicUrl) {
+        propItem.publicUrl = await getAWSUrl(propItem.key);
+      }
+      setItem(propItem);
+    }
+
+    fetchUrls();
+  }, [propItem, getAWSUrl]);
 
   const updatePostItemStatus = (postId, postItemId, newStatus) => {
     return posts.map((post) => {

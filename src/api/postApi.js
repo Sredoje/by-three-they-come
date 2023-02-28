@@ -7,6 +7,7 @@ const FETCH_USER_POSTS_API_URL =
   process.env.REACT_APP_API_URL + 'posts/user-posts';
 const LOCK_POST_ITEM_API_URL = POSTS_API_URL + 'lock-post-item';
 const UNLOCK_POST_ITEM_API_URL = POSTS_API_URL + 'unlock-post-item';
+const PUBLISH_POSTS_API_URL = POSTS_API_URL + 'publish';
 
 const PostApi = {
   createPost: async function (data) {
@@ -108,6 +109,25 @@ const PostApi = {
     let response = await fetch(UNLOCK_POST_ITEM_API_URL, {
       method: 'POST',
       body: JSON.stringify({ postItemId: itemId }),
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
+        Authorization: 'Bearer ' + UserSessionHelper.getToken(),
+      },
+    });
+
+    if (!response.ok) {
+      let responseBody = await response.json();
+      throw new Error(responseBody.message);
+    }
+
+    const result = await response.json();
+    return result;
+  },
+  publishPost: async (postId) => {
+    let response = await fetch(PUBLISH_POSTS_API_URL, {
+      method: 'POST',
+      body: JSON.stringify({ postId: postId }),
       headers: {
         'Content-Type': 'application/json',
         Accept: 'application/json',
