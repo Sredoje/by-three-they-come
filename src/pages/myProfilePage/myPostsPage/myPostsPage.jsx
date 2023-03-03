@@ -2,23 +2,8 @@ import PostApi from '../../../api/postApi';
 import { useState, useEffect, Suspense } from 'react';
 import ItemHolder from './itemHolder';
 import { Button, Typography, Space, Table, Tag, message } from 'antd';
-let AWS = require('aws-sdk');
+import AwsHelper from '../../../helpers/awsHelper';
 
-AWS.config.update({
-  accessKeyId: process.env.REACT_APP_AWS_S3_ACCESS_KEY,
-  secretAccessKey: process.env.REACT_APP_AWS_S3_ACCESS_SECRET,
-  region: 'eu-central-1',
-});
-
-function getAWSUrl(key) {
-  let s3 = new AWS.S3();
-  const result = s3.getSignedUrlPromise('getObject', {
-    Bucket: process.env.REACT_APP_AWS_S3_IMAGE_BUCKET,
-    Key: key,
-  });
-
-  return result;
-}
 function Loading() {
   return <h2>🌀 Loading...</h2>;
 }
@@ -99,7 +84,7 @@ function MyPostsPage() {
                   setPosts={setPosts}
                   posts={posts}
                   hasLockedItem={hasLockedItem(PostItems)}
-                  getAWSUrl={getAWSUrl}
+                  getAWSUrl={AwsHelper.getAWSUrl}
                 ></ItemHolder>
               );
             })}
@@ -145,7 +130,7 @@ function MyPostsPage() {
 
       let newPosts = await data.posts.map((post, postIndex) => {
         post.PostItems.map((postItem, postItemIndex) => {
-          getAWSUrl(postItem.key).then((res) => {
+          AwsHelper.getAWSUrl(postItem.key).then((res) => {
             postItem.publicUrl = res;
             if (postIndex === data.posts.length - 1 && postItemIndex === 2) {
               setPosts(newPosts);
