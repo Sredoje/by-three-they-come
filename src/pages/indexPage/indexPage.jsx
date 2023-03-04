@@ -4,28 +4,31 @@ import './indexPage.css';
 import PostApi from '../../api/postApi';
 import AwsHelper from '../../helpers/awsHelper';
 import { LockOutlined } from '@ant-design/icons';
+import PostItemApi from '../../api/postItemApi';
 // import Blur from 'react-blur';
 
 function IndexPage() {
   const [posts, setPosts] = useState([]);
   const [open, setOpen] = useState(false);
   const [confirmLoading, setConfirmLoading] = useState(false);
+  const [currentItem, setCurrentItem] = useState(null);
   const [modalText, setModalText] = useState(
     'Unlocking this image will cost you 200 points!'
   );
 
-  const showBuyModal = () => {
+  const showBuyModal = (postItemId) => {
     setOpen(true);
+    setCurrentItem(postItemId);
   };
 
-  const handleOk = () => {
+  const handleOk = async () => {
     setModalText('Processing unlock image');
     setConfirmLoading(true);
-    setTimeout(() => {
-      // REDIRECT TO BOUGHT IMAGES
-      setOpen(false);
-      setConfirmLoading(false);
-    }, 2000);
+    let result = await PostItemApi.buyPostItem(currentItem);
+    console.log(result);
+    setOpen(false);
+    setConfirmLoading(false);
+    // Fetch new points from user
   };
   const handleCancel = () => {
     console.log('Clicked cancel button');
@@ -36,10 +39,10 @@ function IndexPage() {
     // fetch data
     const dataFetch = async () => {
       const data = await PostApi.fetchIndexPosts();
+      console.log(data);
       // set state when the data received
-
       let newPosts = await data.posts.map((post, postIndex) => {
-        post.PostItems.map((postItem, postItemIndex) => {
+        post.postItems.map((postItem, postItemIndex) => {
           AwsHelper.getAWSUrl(postItem.key).then((res) => {
             postItem.publicUrl = res;
             if (postIndex === data.posts.length - 1 && postItemIndex === 2) {
@@ -59,10 +62,10 @@ function IndexPage() {
       <Row className="itemWrapper" gutter={[0, 50]}>
         {posts.map((post) => {
           return (
-            <>
-              {post.PostItems.map((postItem) => {
+            <Row key={post.id}>
+              {post.postItems.map((postItem) => {
                 return (
-                  <Col span={8} key={postItem.id}>
+                  <Col span={8} key={'col' + postItem.id}>
                     <Card
                       style={
                         {
@@ -70,17 +73,22 @@ function IndexPage() {
                         }
                       }
                     >
-                      {postItem.status === 'locked' ? (
+                      {postItem.status === 'locked' &&
+                      postItem.ownsItem === false ? (
                         <div>
-                          <div class="ant-image css-dev-only-do-not-override-ixblex">
+                          <div className="ant-image css-dev-only-do-not-override-ixblex">
                             <Image
                               preview={false}
-                              key={postItem.id}
+                              key={postItem.key}
                               src={postItem.publicUrl}
                               className={'locked'}
                             ></Image>
-                            <div class="ant-image-mask" onClick={showBuyModal}>
-                              <div class="ant-image-mask-info">
+                            <div
+                              key={postItem.id}
+                              className="ant-image-mask"
+                              onClick={() => showBuyModal(postItem.id)}
+                            >
+                              <div className="ant-image-mask-info">
                                 <LockOutlined />
                                 Unlock
                               </div>
@@ -89,7 +97,7 @@ function IndexPage() {
                         </div>
                       ) : (
                         <Image
-                          key={postItem.id}
+                          key={postItem.key}
                           // width={500}
                           src={postItem.publicUrl}
                         />
@@ -98,7 +106,7 @@ function IndexPage() {
                   </Col>
                 );
               })}
-            </>
+            </Row>
           );
         })}
       </Row>

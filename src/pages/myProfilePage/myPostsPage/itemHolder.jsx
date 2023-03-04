@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Card, Image, Button, message } from 'antd';
-import PostApi from '../../../api/postApi';
+import PostItemApi from '../../../api/postItemApi';
 
 function ItemHolder({
   item: propItem,
@@ -41,7 +41,9 @@ function ItemHolder({
 
   const handleLockUnlockItem = async (postItem, status) => {
     const apiFunction =
-      status === 'locked' ? PostApi.unlockPostItem : PostApi.lockPostItem;
+      status === 'locked'
+        ? PostItemApi.unlockPostItem
+        : PostItemApi.lockPostItem;
     await apiFunction(postItem.id);
 
     const newStatus = status === 'locked' ? 'unlocked' : 'locked';

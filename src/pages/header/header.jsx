@@ -5,6 +5,7 @@ import { Layout, Menu } from 'antd';
 import { useState, useContext } from 'react';
 import { SettingOutlined } from '@ant-design/icons';
 import { LoggedInContext } from '../../context/loggedInContext';
+import UserSessionHelper from '../../helpers/userSessionHelper';
 const { Header } = Layout;
 function HeaderWrapper() {
   let [selectedKey, setSelectedKey] = useState('0');
@@ -56,6 +57,11 @@ function HeaderWrapper() {
     ],
   };
 
+  let currentPoints = {
+    key: 4,
+    label: 'Points: ' + UserSessionHelper.getUser()?.points,
+    disabled: true,
+  };
   const items = [
     {
       key: 0,
@@ -66,6 +72,9 @@ function HeaderWrapper() {
   // Hiding menu items based on logged in flag
   if (isLoggedIn) {
     items.push(myProfile, logout);
+    if (UserSessionHelper.isLoggedIn()) {
+      items.push(currentPoints);
+    }
   } else {
     items.push(login, register);
   }
