@@ -14,6 +14,11 @@ const UserSessionHelper = {
   getId: () => {
     return JSON.parse(localStorage.getItem('user')).id;
   },
+  setPoints: (newPoints) => {
+    let user = JSON.parse(localStorage.getItem('user'));
+    user.points = newPoints;
+    UserSessionHelper.setUser(user);
+  },
   setToken: (token) => {
     localStorage.setItem('token', token);
   },

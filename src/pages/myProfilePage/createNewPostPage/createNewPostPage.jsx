@@ -42,10 +42,12 @@ function CreateNewPostPage() {
 
     // 👇 Create new FormData object and append files
     const data = new FormData();
+
     fileList.map((file, i) => {
       data.append(`file-${i}`, file.originFileObj, file.name);
       return file;
     });
+
     await PostApi.createPost(data);
     messageApi.open({
       type: 'success',
@@ -84,14 +86,9 @@ function CreateNewPostPage() {
   return (
     <>
       {contextHolder}
-      <h1>
-        Create new post by upload 3 pictures, one of them will be locked to
-        viewers that they can unlock by using points TODO: ADD new page for
-        viewing post That page should have locking of the image, publishing or
-        deleting post. Add page to view all posts for that user ( he can delete
-        post from that screen ) Add page to view all posts for every user
-      </h1>
-
+      <Row align="center">
+        <h1>Upload three pictures!</h1>
+      </Row>
       <Form layout="horizontal" onFinish={handleFinish}>
         <Row align="center" className="registerRow">
           <Col align="center">

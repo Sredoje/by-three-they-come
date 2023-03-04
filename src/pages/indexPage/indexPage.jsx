@@ -25,9 +25,26 @@ function IndexPage() {
     setModalText('Processing unlock image');
     setConfirmLoading(true);
     let result = await PostItemApi.buyPostItem(currentItem);
-    console.log(result);
+    console.log('ovo je posts posle', posts);
+    //UserSessionHelper.setPoints(result.userItem.points);
+    // SET CONTEXT
+    let newPosts = posts.map((post) => {
+      if (post.id === result.userItem.postId) {
+        post.postItems.map((item) => {
+          if (item.id === result.userItem.postItemId) {
+            item.ownsItem = true;
+            return item;
+          }
+          return item;
+        });
+      }
+      return post;
+    });
+
     setOpen(false);
     setConfirmLoading(false);
+    console.log('ovo je posts posle', newPosts);
+    setPosts(newPosts);
     // Fetch new points from user
   };
   const handleCancel = () => {
@@ -60,6 +77,7 @@ function IndexPage() {
   return (
     <>
       <Row className="itemWrapper" gutter={[0, 50]}>
+        DODAJ HVATANJE POENA KAD GOD SE UCITA STRANA
         {posts.map((post) => {
           return (
             <Row key={post.id}>
