@@ -1,35 +1,38 @@
-import { Input, Row, Col, Form, Button, Checkbox, message } from "antd";
-import { LockOutlined, MailOutlined } from "@ant-design/icons";
-import "./loginPage.css";
-import { useContext } from "react";
-import { LoggedInContext } from "../../context/loggedInContext";
-import { useNavigate } from "react-router-dom";
-import UserSessionHelper from "../../helpers/userSessionHelper";
-import UserApi from "../../api/userApi";
-import { NavLink } from "react-router-dom";
+import { Input, Row, Col, Form, Button, Checkbox, message } from 'antd';
+import { LockOutlined, MailOutlined } from '@ant-design/icons';
+import './loginPage.css';
+import { useContext } from 'react';
+import { LoggedInContext } from '../../context/loggedInContext';
+import { useNavigate } from 'react-router-dom';
+import UserSessionHelper from '../../helpers/userSessionHelper';
+import UserApi from '../../api/userApi';
+import { NavLink } from 'react-router-dom';
+import PointsContext from '../../context/pointsContext';
 function LoginPage() {
   const { isLoggedIn, setIsLoggedIn } = useContext(LoggedInContext);
   const [messageApi, contextHolder] = message.useMessage();
+  const { setPoints } = useContext(PointsContext);
   const navigate = useNavigate();
   if (isLoggedIn) {
-    navigate("/");
+    navigate('/');
   }
   const onFinish = (values) => {
     UserApi.loginUser(values.email, values.password)
       .then((response) => {
         UserSessionHelper.setUser(response.user);
         UserSessionHelper.setToken(response.token);
+        setPoints(response.user.points);
         messageApi.open({
-          type: "success",
-          content: "Success! Happy Browsing",
+          type: 'success',
+          content: 'Success! Happy Browsing',
         });
         setIsLoggedIn(true);
-        navigate("/");
+        navigate('/');
       })
       .catch((error) => {
         messageApi.open({
-          type: "error",
-          content: "Wrong email or password combination!",
+          type: 'error',
+          content: 'Wrong email or password combination!',
         });
         setIsLoggedIn(false);
       });
@@ -50,12 +53,12 @@ function LoginPage() {
               name="email"
               rules={[
                 {
-                  type: "email",
-                  message: "The input is not valid E-mail!",
+                  type: 'email',
+                  message: 'The input is not valid E-mail!',
                 },
                 {
                   required: true,
-                  message: "Please input your E-mail!",
+                  message: 'Please input your E-mail!',
                 },
               ]}
             >
@@ -71,7 +74,7 @@ function LoginPage() {
               rules={[
                 {
                   required: true,
-                  message: "Please input your password!",
+                  message: 'Please input your password!',
                 },
               ]}
             >
@@ -86,7 +89,7 @@ function LoginPage() {
                 <Checkbox>Remember me</Checkbox>
               </Form.Item>
 
-              <a className="login-form-forgot" href="">
+              <a className="login-form-forgot" href="#">
                 Forgot password
               </a>
             </Form.Item>
@@ -98,7 +101,7 @@ function LoginPage() {
               >
                 Log in
               </Button>
-              Or <NavLink to={"/register"}>{"register now!"}</NavLink>
+              Or <NavLink to={'/register'}>{'register now!'}</NavLink>
             </Form.Item>
           </Form>
         </Col>

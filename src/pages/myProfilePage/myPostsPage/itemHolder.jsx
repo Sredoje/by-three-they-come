@@ -61,7 +61,7 @@ function ItemHolder({
     <Card
       key={item.id}
       actions={[
-        status === 'draft' && (
+        status === 'draft' ? (
           <Button
             onClick={() => handleLockUnlockItem(item, item.status)}
             disabled={hasLockedItem && item.status === 'unlocked'}
@@ -70,6 +70,10 @@ function ItemHolder({
               ? 'Hide image under paywall'
               : 'Remove paywall from image'}
           </Button>
+        ) : (
+          item.status === 'locked' && (
+            <Button disabled>Hidden under paywall</Button>
+          )
         ),
       ]}
       style={{ width: 200 }}

@@ -1,7 +1,7 @@
 import UserSessionHelper from '../helpers/userSessionHelper';
 
 const POSTS_API_URL = process.env.REACT_APP_API_URL + 'posts/';
-const FETCH_ALL_POSTS_API_URL = process.env.REACT_APP_API_URL + 'posts/';
+const FETCH_ALL_POSTS_API_URL = process.env.REACT_APP_API_URL + 'posts/index';
 const FETCH_USER_POSTS_API_URL =
   process.env.REACT_APP_API_URL + 'posts/user-posts';
 const PUBLISH_POSTS_API_URL = POSTS_API_URL + 'publish';
@@ -25,16 +25,18 @@ const PostApi = {
     const result = await response.json();
     return result;
   },
-  fetchIndexPosts: async function (data) {
+  fetchIndexPosts: async function (offset) {
     let headers = {
+      'Content-Type': 'application/json',
       Accept: 'application/json',
     };
     if (UserSessionHelper.isLoggedIn()) {
       headers['Authorization'] = 'Bearer ' + UserSessionHelper.getToken();
     }
     let response = await fetch(FETCH_ALL_POSTS_API_URL, {
-      method: 'GET',
+      method: 'POST',
       headers: headers,
+      body: JSON.stringify({ offset: offset }),
     });
 
     if (!response.ok) {

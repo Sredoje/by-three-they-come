@@ -19,3 +19,6 @@
 .locked {
   filter: blur(5px);
 }
+.itemsRow {
+  margin-top: 50px;
+}

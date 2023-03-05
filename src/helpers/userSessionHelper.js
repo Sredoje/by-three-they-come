@@ -6,18 +6,16 @@ const UserSessionHelper = {
     return JSON.parse(localStorage.getItem('user'));
   },
   getName: () => {
-    return JSON.parse(localStorage.getItem('user')).userName;
+    return JSON.parse(localStorage.getItem('user'))?.userName;
   },
   getEmail: () => {
-    return JSON.parse(localStorage.getItem('user')).email;
+    return JSON.parse(localStorage.getItem('user'))?.email;
   },
   getId: () => {
-    return JSON.parse(localStorage.getItem('user')).id;
+    return JSON.parse(localStorage.getItem('user'))?.id;
   },
-  setPoints: (newPoints) => {
-    let user = JSON.parse(localStorage.getItem('user'));
-    user.points = newPoints;
-    UserSessionHelper.setUser(user);
+  getPoints: () => {
+    return JSON.parse(localStorage.getItem('user'))?.points;
   },
   setToken: (token) => {
     localStorage.setItem('token', token);

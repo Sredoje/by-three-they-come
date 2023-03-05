@@ -1,15 +1,15 @@
-import { Input, Row, Col, Form, Button, message } from "antd";
-import { UserOutlined, LockOutlined, MailOutlined } from "@ant-design/icons";
-import UserApi from "../../api/userApi";
-import UserSessionHelper from "../../helpers/userSessionHelper";
-import "./registerPage.css";
-import React from "react";
-import LoggedInContext from "../../context/loggedInContext";
-import { useContext } from "react";
-import { useNavigate } from "react-router-dom";
+import { Input, Row, Col, Form, Button, message } from 'antd';
+import { UserOutlined, LockOutlined, MailOutlined } from '@ant-design/icons';
+import UserApi from '../../api/userApi';
+import UserSessionHelper from '../../helpers/userSessionHelper';
+import './registerPage.css';
+import React from 'react';
+import LoggedInContext from '../../context/loggedInContext';
+import { useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
 function RegisterPage() {
   const [messageApi, contextHolder] = message.useMessage();
-  const { isLoggedIn, setIsLoggedIn } = useContext(LoggedInContext);
+  const { setIsLoggedIn } = useContext(LoggedInContext);
   const navigate = useNavigate();
 
   const onFinish = (values) => {
@@ -18,22 +18,22 @@ function RegisterPage() {
         UserSessionHelper.setUser(response.user);
         UserSessionHelper.setToken(response.token);
         messageApi.open({
-          type: "success",
-          content: "Sucesffully created account!" + values.username,
+          type: 'success',
+          content: 'Sucesffully created account!' + values.username,
         });
         setIsLoggedIn(true);
-        navigate("/");
+        navigate('/');
       })
       .catch((error) => {
         messageApi.open({
-          type: "error",
+          type: 'error',
           content: error.message,
         });
         setIsLoggedIn(false);
       });
   };
   const onFinishFailed = (errorInfo) => {
-    console.log("Failed:", errorInfo);
+    console.log('Failed:', errorInfo);
   };
 
   return (
@@ -53,7 +53,7 @@ function RegisterPage() {
               rules={[
                 {
                   required: true,
-                  message: "Please input your username!",
+                  message: 'Please input your username!',
                 },
               ]}
             >
@@ -67,12 +67,12 @@ function RegisterPage() {
               name="email"
               rules={[
                 {
-                  type: "email",
-                  message: "The input is not valid E-mail!",
+                  type: 'email',
+                  message: 'The input is not valid E-mail!',
                 },
                 {
                   required: true,
-                  message: "Please input your E-mail!",
+                  message: 'Please input your E-mail!',
                 },
               ]}
             >
@@ -87,7 +87,7 @@ function RegisterPage() {
               rules={[
                 {
                   required: true,
-                  message: "Please input your password!",
+                  message: 'Please input your password!',
                 },
               ]}
               hasFeedback
@@ -101,21 +101,21 @@ function RegisterPage() {
 
             <Form.Item
               name="confirm"
-              dependencies={["password"]}
+              dependencies={['password']}
               hasFeedback
               rules={[
                 {
                   required: true,
-                  message: "Please confirm your password!",
+                  message: 'Please confirm your password!',
                 },
                 ({ getFieldValue }) => ({
                   validator(_, value) {
-                    if (!value || getFieldValue("password") === value) {
+                    if (!value || getFieldValue('password') === value) {
                       return Promise.resolve();
                     }
                     return Promise.reject(
                       new Error(
-                        "The two passwords that you entered do not match!"
+                        'The two passwords that you entered do not match!'
                       )
                     );
                   },

@@ -6,10 +6,12 @@ import { useState, useContext } from 'react';
 import { SettingOutlined } from '@ant-design/icons';
 import { LoggedInContext } from '../../context/loggedInContext';
 import UserSessionHelper from '../../helpers/userSessionHelper';
+import PointsContext from '../../context/pointsContext';
 const { Header } = Layout;
 function HeaderWrapper() {
   let [selectedKey, setSelectedKey] = useState('0');
   const { isLoggedIn } = useContext(LoggedInContext);
+  const { points } = useContext(PointsContext);
   const location = useLocation();
   const { pathname } = location;
   const splitLocation = pathname.split('/');
@@ -56,10 +58,10 @@ function HeaderWrapper() {
       },
     ],
   };
-
+  console.log(points);
   let currentPoints = {
     key: 4,
-    label: 'Points: ' + UserSessionHelper.getUser()?.points,
+    label: 'Points: ' + points,
     disabled: true,
   };
   const items = [
