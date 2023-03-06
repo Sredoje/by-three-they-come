@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 
 // Express side of upload https://github.com/react-component/upload/blob/master/server.js
 // https://levelup.gitconnected.com/managing-file-uploads-with-ant-design-6d78e592f2c4
-function CreateNewPostPage() {
+function CreateNewPost() {
   const navigate = useNavigate();
   const getBase64 = (file) =>
     new Promise((resolve, reject) => {
@@ -142,4 +142,4 @@ function CreateNewPostPage() {
     </>
   );
 }
-export default CreateNewPostPage;
+export default CreateNewPost;

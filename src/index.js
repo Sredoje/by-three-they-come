@@ -6,14 +6,14 @@ import reportWebVitals from './reportWebVitals';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import Root from './pages/root';
 import ErrorPage from './error-page';
-import IndexPage from './pages/indexPage/indexPage';
-import LoginPage from './pages/loginPage/loginPage';
-import RegisterPage from './pages/registerPage/registerPage';
-import CreateNewPostPage from './pages/myProfilePage/createNewPostPage/createNewPostPage';
-import ReportsPage from './pages/myProfilePage/reportsPage/reportsPage';
-import AccountInfoPage from './pages/myProfilePage/accountInfoPage/accountInfoPage';
-import LogoutPage from './pages/logoutPage/logoutPage';
-import MyPostsPage from './pages/myProfilePage/myPostsPage/myPostsPage';
+import Index from './pages/index/index';
+import Login from './pages/login/login';
+import Register from './pages/register/register';
+import CreateNewPost from './pages/myProfile/createNewPost/createNewPost';
+import Reports from './pages/myProfile/reports/reports';
+import AccountInfo from './pages/myProfile/accountInfo/accountInfo';
+import Logout from './pages/logout/logout';
+import MyPosts from './pages/myProfile/myPosts/myPosts';
 
 // After adding a route, be sure to update header.jsx
 const router = createBrowserRouter([
@@ -22,27 +22,27 @@ const router = createBrowserRouter([
     element: <Root />,
     errorElement: <ErrorPage />,
     children: [
-      { index: true, element: <IndexPage /> },
-      { path: 'login', element: <LoginPage></LoginPage> },
-      { path: 'register', element: <RegisterPage></RegisterPage> },
-      { path: 'logout', element: <LogoutPage></LogoutPage> },
+      { index: true, element: <Index /> },
+      { path: 'login', element: <Login></Login> },
+      { path: 'register', element: <Register></Register> },
+      { path: 'logout', element: <Logout></Logout> },
       {
         path: 'my-profile',
-        // element: <MyProfilePage></MyProfilePage>,
+        // element: <MyProfile></MyProfile>,
         children: [
           {
             path: 'account-info',
-            element: <AccountInfoPage></AccountInfoPage>,
+            element: <AccountInfo></AccountInfo>,
           },
           {
             path: 'new-post',
-            element: <CreateNewPostPage></CreateNewPostPage>,
+            element: <CreateNewPost></CreateNewPost>,
           },
           {
             path: 'reports',
-            element: <ReportsPage></ReportsPage>,
+            element: <Reports></Reports>,
           },
-          { path: 'my-posts', element: <MyPostsPage></MyPostsPage> },
+          { path: 'my-posts', element: <MyPosts></MyPosts> },
         ],
       },
     ],

@@ -33,6 +33,18 @@ function HeaderWrapper() {
     label: <NavLink to={'/register'}>{'Register'}</NavLink>,
   };
 
+  const newPost = {
+    label: <NavLink to={'/my-profile/new-post'}>{'New Post'}</NavLink>,
+    key: 'myProfile:new-post',
+  };
+  const reports = {
+    label: <NavLink to={'/my-profile/reports'}>{'Report'}</NavLink>,
+    key: 'myProfile:reports',
+  };
+  const myPosts = {
+    label: <NavLink to={'/my-profile/my-posts'}>{'My Posts'}</NavLink>,
+    key: 'myProfile:my-posts',
+  };
   let myProfile = {
     key: 3,
     label: 'My Profile',
@@ -44,25 +56,15 @@ function HeaderWrapper() {
         ),
         key: 'myProfile:account-info',
       },
-      {
-        label: <NavLink to={'/my-profile/new-post'}>{'New Post'}</NavLink>,
-        key: 'myProfile:new-post',
-      },
-      {
-        label: <NavLink to={'/my-profile/reports'}>{'Report'}</NavLink>,
-        key: 'myProfile:reports',
-      },
-      {
-        label: <NavLink to={'/my-profile/my-posts'}>{'My Posts'}</NavLink>,
-        key: 'myProfile:my-posts',
-      },
     ],
   };
-  console.log(points);
+
+  if (isLoggedIn && UserSessionHelper.isAdmin()) {
+    myProfile.children.push(newPost, myPosts, reports);
+  }
   let currentPoints = {
     key: 4,
     label: 'Points: ' + points,
-    disabled: true,
   };
   const items = [
     {
@@ -74,9 +76,7 @@ function HeaderWrapper() {
   // Hiding menu items based on logged in flag
   if (isLoggedIn) {
     items.push(myProfile, logout);
-    if (UserSessionHelper.isLoggedIn()) {
-      items.push(currentPoints);
-    }
+    items.push(currentPoints);
   } else {
     items.push(login, register);
   }

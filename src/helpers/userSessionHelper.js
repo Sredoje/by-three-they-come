@@ -1,4 +1,7 @@
 const UserSessionHelper = {
+  adminRole: 'admin',
+  managerRole: 'manager',
+  normalRole: 'normal',
   setUser: (user) => {
     localStorage.setItem('user', JSON.stringify(user));
   },
@@ -28,6 +31,12 @@ const UserSessionHelper = {
     } else {
       return true;
     }
+  },
+  isAdmin: () => {
+    return (
+      JSON.parse(localStorage.getItem('user'))?.role ===
+      UserSessionHelper.adminRole
+    );
   },
   clearStorage: () => {
     localStorage.removeItem('token');

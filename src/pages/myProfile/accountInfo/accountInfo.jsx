@@ -1,8 +1,8 @@
-function AccountInfoPage() {
+function AccountInfo() {
   return (
     <>
       <div>Account info</div>
     </>
   );
 }
-export default AccountInfoPage;
+export default AccountInfo;

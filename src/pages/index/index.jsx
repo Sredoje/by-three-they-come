@@ -1,6 +1,6 @@
-import { Row, Col, Modal, Image, Card } from 'antd';
+import { Row, Col, Modal, Image, Card, message } from 'antd';
 import React, { useState, useEffect, useContext } from 'react';
-import './indexPage.css';
+import './index.css';
 import PostApi from '../../api/postApi';
 import AwsHelper from '../../helpers/awsHelper';
 import { LockOutlined } from '@ant-design/icons';
@@ -10,12 +10,13 @@ import PointsContext from '../../context/pointsContext';
 import InfiniteScroll from 'react-infinite-scroll-component';
 // import Blur from 'react-blur';
 
-function IndexPage() {
+function Index() {
   const [posts, setPosts] = useState([]);
   const [open, setOpen] = useState(false);
   const [confirmLoading, setConfirmLoading] = useState(false);
   const [currentItem, setCurrentItem] = useState(null);
   const { setPoints } = useContext(PointsContext);
+  const { error } = message;
   const [modalText, setModalText] = useState(
     'Unlocking this image will cost you 200 points!'
   );
@@ -29,23 +30,30 @@ function IndexPage() {
   const handleOk = async () => {
     setModalText('Processing unlock image');
     setConfirmLoading(true);
-    let result = await PostItemApi.buyPostItem(currentItem);
-    let newPosts = posts.map((post) => {
-      if (post.id === result.userItem.postId) {
-        post.postItems.map((item) => {
-          if (item.id === result.userItem.postItemId) {
-            item.ownsItem = true;
+    try {
+      let result = await PostItemApi.buyPostItem(currentItem);
+      let newPosts = posts.map((post) => {
+        if (post.id === result.userItem.postId) {
+          post.postItems.map((item) => {
+            if (item.id === result.userItem.postItemId) {
+              item.ownsItem = true;
+              return item;
+            }
             return item;
-          }
-          return item;
-        });
-      }
-      return post;
-    });
-    setPoints(result.userItem.points);
-    setOpen(false);
-    setConfirmLoading(false);
-    setPosts(newPosts);
+          });
+        }
+        return post;
+      });
+      setPoints(result.userItem.points);
+      setOpen(false);
+      setConfirmLoading(false);
+      setPosts(newPosts);
+    } catch (e) {
+      setOpen(false);
+      setConfirmLoading(false);
+      error(e.message);
+    }
+
     // Fetch new points from user
   };
   const handleCancel = () => {
@@ -110,53 +118,48 @@ function IndexPage() {
           }
         >
           DODAJ FORGOT PASSWORD DODAJ CONFIRM ACCOUNT DODAJ RESET PASWORD
-          SKLOINI UPLOAD SLIKA ZA DRUGE DODAJ ROLE
+          SKLOINI UPLOAD SLIKA ZA DRUGE DODAJ ROLE DODAJ RESTRICT TO
           {posts.map((post) => {
             return (
-              <>
-                <Row key={post.id} className="itemsRow">
-                  {post.postItems.map((postItem) => {
-                    return (
-                      <Col span={8} key={'col' + postItem.id}>
-                        <Card
-                          style={{
-                            width: 350,
-                          }}
-                        >
-                          {postItem.status === 'locked' &&
-                          postItem.ownsItem === false ? (
-                            <div>
-                              <div className="ant-image css-dev-only-do-not-override-ixblex">
-                                <Image
-                                  preview={false}
-                                  key={postItem.key}
-                                  src={postItem.publicUrl}
-                                  className={'locked'}
-                                ></Image>
-                                <div
-                                  key={postItem.id}
-                                  className="ant-image-mask"
-                                  onClick={() => showBuyModal(postItem.id)}
-                                >
-                                  <div className="ant-image-mask-info">
-                                    <LockOutlined />
-                                    Unlock
-                                  </div>
+              <Row key={post.id} className="itemsRow">
+                {post.postItems.map((postItem) => {
+                  return (
+                    <Col span={8} key={'col' + postItem.id}>
+                      <Card
+                        style={{
+                          width: 350,
+                        }}
+                      >
+                        {postItem.status === 'locked' &&
+                        postItem.ownsItem === false ? (
+                          <div>
+                            <div className="ant-image css-dev-only-do-not-override-ixblex">
+                              <Image
+                                preview={false}
+                                key={postItem.key}
+                                src={postItem.publicUrl}
+                                className={'locked'}
+                              ></Image>
+                              <div
+                                key={postItem.id}
+                                className="ant-image-mask"
+                                onClick={() => showBuyModal(postItem.id)}
+                              >
+                                <div className="ant-image-mask-info">
+                                  <LockOutlined />
+                                  Unlock
                                 </div>
                               </div>
                             </div>
-                          ) : (
-                            <Image
-                              key={postItem.key}
-                              src={postItem.publicUrl}
-                            />
-                          )}
-                        </Card>
-                      </Col>
-                    );
-                  })}
-                </Row>
-              </>
+                          </div>
+                        ) : (
+                          <Image key={postItem.key} src={postItem.publicUrl} />
+                        )}
+                      </Card>
+                    </Col>
+                  );
+                })}
+              </Row>
             );
           })}
         </InfiniteScroll>
@@ -164,4 +167,4 @@ function IndexPage() {
     </>
   );
 }
-export default IndexPage;
+export default Index;

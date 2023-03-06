@@ -1,8 +1,8 @@
-function ReportsPage() {
+function Reports() {
   return (
     <>
       <div>REPORTS </div>
     </>
   );
 }
-export default ReportsPage;
+export default Reports;

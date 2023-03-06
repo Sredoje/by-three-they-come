@@ -2,14 +2,16 @@ import { Input, Row, Col, Form, Button, message } from 'antd';
 import { UserOutlined, LockOutlined, MailOutlined } from '@ant-design/icons';
 import UserApi from '../../api/userApi';
 import UserSessionHelper from '../../helpers/userSessionHelper';
-import './registerPage.css';
+import './register.css';
 import React from 'react';
 import LoggedInContext from '../../context/loggedInContext';
 import { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
-function RegisterPage() {
+import PointsContext from '../../context/pointsContext';
+function Register() {
   const [messageApi, contextHolder] = message.useMessage();
   const { setIsLoggedIn } = useContext(LoggedInContext);
+  const { setPoints } = useContext(PointsContext);
   const navigate = useNavigate();
 
   const onFinish = (values) => {
@@ -17,6 +19,7 @@ function RegisterPage() {
       .then((response) => {
         UserSessionHelper.setUser(response.user);
         UserSessionHelper.setToken(response.token);
+        setPoints(response.user.points);
         messageApi.open({
           type: 'success',
           content: 'Sucesffully created account!' + values.username,
@@ -143,4 +146,4 @@ function RegisterPage() {
     </>
   );
 }
-export default RegisterPage;
+export default Register;

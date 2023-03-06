@@ -8,7 +8,7 @@ function Loading() {
   return <h2>🌀 Loading...</h2>;
 }
 
-function MyPostsPage() {
+function MyPosts() {
   const [posts, setPosts] = useState([]);
   const [messageApi, contextHolder] = message.useMessage();
 
@@ -166,4 +166,4 @@ function MyPostsPage() {
     </>
   );
 }
-export default MyPostsPage;
+export default MyPosts;

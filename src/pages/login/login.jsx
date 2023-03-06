@@ -1,6 +1,6 @@
 import { Input, Row, Col, Form, Button, Checkbox, message } from 'antd';
 import { LockOutlined, MailOutlined } from '@ant-design/icons';
-import './loginPage.css';
+import './login.css';
 import { useContext } from 'react';
 import { LoggedInContext } from '../../context/loggedInContext';
 import { useNavigate } from 'react-router-dom';
@@ -8,7 +8,7 @@ import UserSessionHelper from '../../helpers/userSessionHelper';
 import UserApi from '../../api/userApi';
 import { NavLink } from 'react-router-dom';
 import PointsContext from '../../context/pointsContext';
-function LoginPage() {
+function Login() {
   const { isLoggedIn, setIsLoggedIn } = useContext(LoggedInContext);
   const [messageApi, contextHolder] = message.useMessage();
   const { setPoints } = useContext(PointsContext);
@@ -109,4 +109,4 @@ function LoginPage() {
     </>
   );
 }
-export default LoginPage;
+export default Login;
