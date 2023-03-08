@@ -14,6 +14,7 @@ import Reports from './pages/myProfile/reports/reports';
 import AccountInfo from './pages/myProfile/accountInfo/accountInfo';
 import Logout from './pages/logout/logout';
 import MyPosts from './pages/myProfile/myPosts/myPosts';
+import PurchasedItems from './pages/myProfile/purchasedItems/purchasedItems';
 
 // After adding a route, be sure to update header.jsx
 const router = createBrowserRouter([
@@ -30,6 +31,10 @@ const router = createBrowserRouter([
         path: 'my-profile',
         // element: <MyProfile></MyProfile>,
         children: [
+          {
+            path: 'purchased-items',
+            element: <PurchasedItems></PurchasedItems>,
+          },
           {
             path: 'account-info',
             element: <AccountInfo></AccountInfo>,

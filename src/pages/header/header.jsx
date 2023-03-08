@@ -45,6 +45,12 @@ function HeaderWrapper() {
     label: <NavLink to={'/my-profile/my-posts'}>{'My Posts'}</NavLink>,
     key: 'myProfile:my-posts',
   };
+  const purchasedItems = {
+    label: (
+      <NavLink to={'/my-profile/purchased-items'}>{'Purchased Items'}</NavLink>
+    ),
+    key: 'myProfile:purchased-items',
+  };
   let myProfile = {
     key: 3,
     label: 'My Profile',
@@ -59,9 +65,6 @@ function HeaderWrapper() {
     ],
   };
 
-  if (isLoggedIn && UserSessionHelper.isAdmin()) {
-    myProfile.children.push(newPost, myPosts, reports);
-  }
   let currentPoints = {
     key: 4,
     label: 'Points: ' + points,
@@ -75,6 +78,10 @@ function HeaderWrapper() {
 
   // Hiding menu items based on logged in flag
   if (isLoggedIn) {
+    myProfile.children.push(purchasedItems);
+    if (UserSessionHelper.isAdmin()) {
+      myProfile.children.push(newPost, myPosts, reports);
+    }
     items.push(myProfile, logout);
     items.push(currentPoints);
   } else {
@@ -93,21 +100,7 @@ function HeaderWrapper() {
 
     let subNode = splitLocation[2];
     if (subNode) {
-      if (subNode === 'account-info') {
-        newKey = 'myProfile:account-info';
-      }
-      if (subNode === 'upload-pictures') {
-        newKey = 'myProfile:upload-pictures';
-      }
-      if (subNode === 'reports') {
-        newKey = 'myProfile:reports';
-      }
-      if (subNode === 'my-posts') {
-        newKey = 'myProfile:my-posts';
-      }
-      if (subNode === 'new-post') {
-        newKey = 'myProfile:new-post';
-      }
+      newKey = 'myProfile:' + subNode;
     }
   }
   if (newKey !== selectedKey) {

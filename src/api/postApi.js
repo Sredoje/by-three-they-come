@@ -4,6 +4,8 @@ const POSTS_API_URL = process.env.REACT_APP_API_URL + 'posts/';
 const FETCH_ALL_POSTS_API_URL = process.env.REACT_APP_API_URL + 'posts/index';
 const FETCH_USER_POSTS_API_URL =
   process.env.REACT_APP_API_URL + 'posts/user-posts';
+const FETCH_PURCHASED_POSTS_API_URL =
+  process.env.REACT_APP_API_URL + 'posts/purchased';
 const PUBLISH_POSTS_API_URL = POSTS_API_URL + 'publish';
 
 const PostApi = {
@@ -50,6 +52,26 @@ const PostApi = {
   fetchUserPosts: async () => {
     let response = await fetch(
       FETCH_USER_POSTS_API_URL + '/' + UserSessionHelper.getId(),
+      {
+        method: 'GET',
+        headers: {
+          Accept: 'application/json',
+          Authorization: 'Bearer ' + UserSessionHelper.getToken(),
+        },
+      }
+    );
+
+    if (!response.ok) {
+      let responseBody = await response.json();
+      throw new Error(responseBody.message);
+    }
+
+    const result = await response.json();
+    return result;
+  },
+  fetchPurchasedPosts: async () => {
+    let response = await fetch(
+      FETCH_PURCHASED_POSTS_API_URL + '/' + UserSessionHelper.getId(),
       {
         method: 'GET',
         headers: {

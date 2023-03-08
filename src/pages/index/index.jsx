@@ -34,7 +34,7 @@ function Index() {
       let result = await PostItemApi.buyPostItem(currentItem);
       let newPosts = posts.map((post) => {
         if (post.id === result.userItem.postId) {
-          post.postItems.map((item) => {
+          post.PostItems.map((item) => {
             if (item.id === result.userItem.postItemId) {
               item.ownsItem = true;
               return item;
@@ -72,17 +72,17 @@ function Index() {
     // set state when the data received
     let userId = UserSessionHelper.getId();
     let newPosts = await data.posts.map((post, postIndex) => {
-      post.postItems.map((postItem, postItemIndex) => {
-        if (userId === postItem.id) {
-          postItem.ownsItem = true;
+      post.PostItems.map((PostItem, postItemIndex) => {
+        if (userId === PostItem.id) {
+          PostItem.ownsItem = true;
         }
-        AwsHelper.getAWSUrl(postItem.key).then((res) => {
-          postItem.publicUrl = res;
+        AwsHelper.getAWSUrl(PostItem.key).then((res) => {
+          PostItem.publicUrl = res;
           if (postIndex === data.posts.length - 1 && postItemIndex === 2) {
             setPosts(posts.concat(newPosts));
           }
         });
-        return postItem;
+        return PostItem;
       });
       return post;
     });
@@ -118,32 +118,34 @@ function Index() {
           }
         >
           DODAJ FORGOT PASSWORD DODAJ CONFIRM ACCOUNT DODAJ RESET PASWORD
-          SKLOINI UPLOAD SLIKA ZA DRUGE DODAJ ROLE DODAJ RESTRICT TO
+          SKLOINI UPLOAD SLIKA ZA DRUGE DODAJ ROLE DODAJ RESTRICT TO AKO JE
+          IZLOGOVAN i KLIKNE DA KUPI SLIKU, POSALJI GA NA LOGIN STRANU Move
+          function for getting aws images to utils since its used in two files
           {posts.map((post) => {
             return (
               <Row key={post.id} className="itemsRow">
-                {post.postItems.map((postItem) => {
+                {post.PostItems.map((PostItem) => {
                   return (
-                    <Col span={8} key={'col' + postItem.id}>
+                    <Col span={6} key={'col' + PostItem.id}>
                       <Card
-                        style={{
-                          width: 350,
-                        }}
+                      // style={{
+                      //   width: 350,
+                      // }}
                       >
-                        {postItem.status === 'locked' &&
-                        postItem.ownsItem === false ? (
+                        {PostItem.status === 'locked' &&
+                        PostItem.ownsItem === false ? (
                           <div>
                             <div className="ant-image css-dev-only-do-not-override-ixblex">
                               <Image
                                 preview={false}
-                                key={postItem.key}
-                                src={postItem.publicUrl}
+                                key={PostItem.key}
+                                src={PostItem.publicUrl}
                                 className={'locked'}
                               ></Image>
                               <div
-                                key={postItem.id}
+                                key={PostItem.id}
                                 className="ant-image-mask"
-                                onClick={() => showBuyModal(postItem.id)}
+                                onClick={() => showBuyModal(PostItem.id)}
                               >
                                 <div className="ant-image-mask-info">
                                   <LockOutlined />
@@ -153,7 +155,7 @@ function Index() {
                             </div>
                           </div>
                         ) : (
-                          <Image key={postItem.key} src={postItem.publicUrl} />
+                          <Image key={PostItem.key} src={PostItem.publicUrl} />
                         )}
                       </Card>
                     </Col>

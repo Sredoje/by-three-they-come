@@ -21,4 +21,5 @@
 }
 .itemsRow {
   margin-top: 50px;
+  justify-content: space-around;
 }
