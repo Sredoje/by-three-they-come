@@ -117,11 +117,25 @@ function Index() {
             </p>
           }
         >
-          DODAJ FORGOT PASSWORD DODAJ CONFIRM ACCOUNT DODAJ RESET PASWORD
-          SKLOINI UPLOAD SLIKA ZA DRUGE DODAJ ROLE DODAJ RESTRICT TO AKO JE
-          IZLOGOVAN i KLIKNE DA KUPI SLIKU, POSALJI GA NA LOGIN STRANU Move
-          function for getting aws images to utils since its used in two files
-          PREBACI POINTS DA BUDE COINS UBACI LOGO ADD SEND EMAIL TO THE OWNER
+          <ul>
+            <li>DODAJ FORGOT PASSWORD</li>
+            <li>DODAJ CONFIRM ACCOUNT</li>
+            <li>DODAJ RESET PASWORD</li>
+            <li>SKLOINI UPLOAD SLIKA ZA DRUGE</li>
+            <li>DODAJ ROLE</li>
+            <li>
+              DODAJ RESTRICT TO AKO JE IZLOGOVAN i KLIKNE DA KUPI SLIKU, POSALJI
+              GA NA LOGIN STRANU
+            </li>
+            <li>
+              Move function for getting aws images to utils since its used in
+              two files
+            </li>
+            <li> PREBACI POINTS DA BUDE COINS UBACI</li>
+            <li> LOGO ADD SEND EMAIL TO THE OWNER</li>
+            <li>Dodaj sockete</li>
+            <li> Namesti deploy</li>
+          </ul>
           {posts.map((post) => {
             return (
               <Row key={post.id} className="itemsRow">
