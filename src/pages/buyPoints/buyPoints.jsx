@@ -10,13 +10,11 @@ function BuyPoints() {
   const { success, error } = message;
   const { setPoints } = useContext(PointsContext);
   const onChargeSuccess = async (messageData) => {
-    // console.log('Charge success', messageData);
     let response = await PaymentApi.processPayment(messageData);
     setPoints(response.points);
     success('Sucessfully bought points!', 7);
   };
   const onChargeFailure = (messageData) => {
-    // console.log('Charge Failure', messageData);
     PaymentApi.processPayment(messageData);
     error(
       'There was an error with payment, please try again or contact us if you have any issues!',
