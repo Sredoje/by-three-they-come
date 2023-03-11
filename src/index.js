@@ -15,6 +15,7 @@ import AccountInfo from './pages/myProfile/accountInfo/accountInfo';
 import Logout from './pages/logout/logout';
 import MyPosts from './pages/myProfile/myPosts/myPosts';
 import PurchasedItems from './pages/myProfile/purchasedItems/purchasedItems';
+import ContactUs from './pages/contactUs/contactUs';
 
 // After adding a route, be sure to update header.jsx
 const router = createBrowserRouter([
@@ -50,6 +51,7 @@ const router = createBrowserRouter([
           { path: 'my-posts', element: <MyPosts></MyPosts> },
         ],
       },
+      { path: 'contact-us', element: <ContactUs></ContactUs> },
     ],
   },
 ]);

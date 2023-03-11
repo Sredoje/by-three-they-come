@@ -44,6 +44,7 @@ function Register() {
       {contextHolder}
       <Row align="center" className="registerRow">
         <Col>
+          <h2>Register</h2>
           <Form
             name="basic"
             initialValues={{ remember: true }}

@@ -43,6 +43,7 @@ function Login() {
       {contextHolder}
       <Row align="center" className="loginRow">
         <Col>
+          <h2>Login</h2>
           <Form
             name="basic"
             initialValues={{ remember: true }}
