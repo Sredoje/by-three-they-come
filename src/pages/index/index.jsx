@@ -142,30 +142,24 @@ function Index() {
                 {post.PostItems.map((PostItem) => {
                   return (
                     <Col span={6} key={'col' + PostItem.id}>
-                      <Card
-                      // style={{
-                      //   width: 350,
-                      // }}
-                      >
+                      <Card>
                         {PostItem.status === 'locked' &&
                         PostItem.ownsItem === false ? (
-                          <div>
-                            <div className="ant-image css-dev-only-do-not-override-ixblex">
-                              <Image
-                                preview={false}
-                                key={PostItem.key}
-                                src={PostItem.publicUrl}
-                                className={'locked'}
-                              ></Image>
-                              <div
-                                key={PostItem.id}
-                                className="ant-image-mask"
-                                onClick={() => showBuyModal(PostItem.id)}
-                              >
-                                <div className="ant-image-mask-info">
-                                  <LockOutlined />
-                                  Unlock
-                                </div>
+                          <div className="ant-image css-ixblex css-dev-only-do-not-override-ixblex">
+                            <img
+                              className="ant-image-img locked"
+                              src={PostItem.publicUrl}
+                              key={PostItem.key}
+                              width={300}
+                            ></img>
+                            <div
+                              key={PostItem.id}
+                              className="ant-image-mask"
+                              onClick={() => showBuyModal(PostItem.id)}
+                            >
+                              <div className="ant-image-mask-info">
+                                <LockOutlined />
+                                Unlock
                               </div>
                             </div>
                           </div>

@@ -1,5 +1,3 @@
-import UserSessionHelper from '../helpers/userSessionHelper';
-
 const EMAIL_API_URL = process.env.REACT_APP_API_URL + 'emails/';
 const SUBMIT_FEEDBACK_URL = EMAIL_API_URL + 'submit-feedback';
 
