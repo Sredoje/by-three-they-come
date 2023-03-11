@@ -67,12 +67,17 @@ function HeaderWrapper() {
 
   let currentPoints = {
     key: 4,
-    label: 'Points: ' + points,
+    label: <NavLink to={'/buy-points'}>{'Points:' + points}</NavLink>,
   };
 
   let contactUs = {
     key: 5,
     label: <NavLink to={'/contact-us'}>{'Contact Us'}</NavLink>,
+  };
+
+  let buyPoints = {
+    key: 6,
+    label: <NavLink to={'/buy-points'}>{'Buy Points'}</NavLink>,
   };
 
   const items = [
@@ -90,6 +95,7 @@ function HeaderWrapper() {
     }
     items.push(myProfile, logout);
     items.push(currentPoints);
+    items.push(buyPoints);
   } else {
     items.push(login, register);
   }
@@ -112,6 +118,8 @@ function HeaderWrapper() {
     }
   } else if (currentpage === 'contact-us') {
     newKey = contactUs.key.toString();
+  } else if (currentpage === 'buy-points') {
+    newKey = buyPoints.key.toString();
   }
   if (newKey !== selectedKey) {
     setSelectedKey(newKey);

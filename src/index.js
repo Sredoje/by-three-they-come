@@ -16,6 +16,7 @@ import Logout from './pages/logout/logout';
 import MyPosts from './pages/myProfile/myPosts/myPosts';
 import PurchasedItems from './pages/myProfile/purchasedItems/purchasedItems';
 import ContactUs from './pages/contactUs/contactUs';
+import BuyPoints from './pages/buyPoints/buyPoints';
 
 // After adding a route, be sure to update header.jsx
 const router = createBrowserRouter([
@@ -52,6 +53,7 @@ const router = createBrowserRouter([
         ],
       },
       { path: 'contact-us', element: <ContactUs></ContactUs> },
+      { path: 'buy-points', element: <BuyPoints></BuyPoints> },
     ],
   },
 ]);
