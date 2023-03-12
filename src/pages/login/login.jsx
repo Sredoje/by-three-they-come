@@ -41,9 +41,13 @@ function Login() {
   return (
     <>
       {contextHolder}
+      <Row align="center">
+        <h2 className="loginHeader">
+          Login to unlock and see unlocked images!
+        </h2>
+      </Row>
       <Row align="center" className="loginRow">
         <Col>
-          <h2>Login</h2>
           <Form
             name="basic"
             initialValues={{ remember: true }}

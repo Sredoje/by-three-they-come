@@ -2,7 +2,7 @@ import React from 'react';
 import HeaderWrapper from './header/header';
 import FooterWrapper from './footer/footer';
 import { Outlet } from 'react-router-dom';
-import { Layout } from 'antd';
+import { Layout, ConfigProvider } from 'antd';
 import { LoggedInContext } from '../context/loggedInContext';
 import { useState } from 'react';
 import UserSessionHelper from '../helpers/userSessionHelper';
@@ -19,15 +19,23 @@ export default function Root() {
     <>
       <PointsContext.Provider value={pointsValue}>
         <LoggedInContext.Provider value={value}>
-          <Layout>
-            <HeaderWrapper></HeaderWrapper>
+          <ConfigProvider
+            theme={{
+              token: {
+                colorPrimary: '#EC9706',
+              },
+            }}
+          >
             <Layout>
-              <Content className="content">
-                <Outlet />
-              </Content>
+              <HeaderWrapper></HeaderWrapper>
+              <Layout>
+                <Content className="content">
+                  <Outlet />
+                </Content>
+              </Layout>
+              <FooterWrapper></FooterWrapper>
             </Layout>
-            <FooterWrapper></FooterWrapper>
-          </Layout>
+          </ConfigProvider>
         </LoggedInContext.Provider>
       </PointsContext.Provider>
     </>

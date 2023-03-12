@@ -42,9 +42,13 @@ function Register() {
   return (
     <>
       {contextHolder}
+      <Row align="center">
+        <h2 className="registerHeader">
+          Register for free and get 2000 points for unlocking images!
+        </h2>
+      </Row>
       <Row align="center" className="registerRow">
         <Col>
-          <h2>Register</h2>
           <Form
             name="basic"
             initialValues={{ remember: true }}

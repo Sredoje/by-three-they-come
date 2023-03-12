@@ -14,3 +14,10 @@
   margin-top: 5px;
   fill: hotpink;
 }
+
+.rightSide.ant-menu-item {
+  margin-left: auto;
+}
+/* .pointsMenuItem {
+  font-weight: bold;
+} */

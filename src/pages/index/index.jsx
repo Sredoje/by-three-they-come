@@ -1,4 +1,4 @@
-import { Row, Col, Modal, Image, Card, message } from 'antd';
+import { Row, Col, Modal, Image, Card, message, Button } from 'antd';
 import React, { useState, useEffect, useContext } from 'react';
 import './index.css';
 import PostApi from '../../api/postApi';
@@ -8,15 +8,20 @@ import PostItemApi from '../../api/postItemApi';
 import UserSessionHelper from '../../helpers/userSessionHelper';
 import PointsContext from '../../context/pointsContext';
 import InfiniteScroll from 'react-infinite-scroll-component';
+import LoggedInContext from '../../context/loggedInContext';
+import { useNavigate } from 'react-router-dom';
 // import Blur from 'react-blur';
 
 function Index() {
   const [posts, setPosts] = useState([]);
   const [open, setOpen] = useState(false);
+  const [openLoginModal, setOpenLoginModal] = useState(false);
+  const { isLoggedIn } = useContext(LoggedInContext);
   const [confirmLoading, setConfirmLoading] = useState(false);
   const [currentItem, setCurrentItem] = useState(null);
   const { setPoints } = useContext(PointsContext);
   const { error } = message;
+  const navigate = useNavigate();
   const [modalText, setModalText] = useState(
     'Unlocking this image will cost you 200 points!'
   );
@@ -25,6 +30,20 @@ function Index() {
   const showBuyModal = (postItemId) => {
     setOpen(true);
     setCurrentItem(postItemId);
+  };
+
+  const showLoginModal = () => {
+    setOpenLoginModal(true);
+  };
+
+  const handleRegister = () => {
+    setOpenLoginModal(false);
+    navigate('/register');
+  };
+
+  const handleLogin = () => {
+    setOpenLoginModal(false);
+    navigate('/login');
   };
 
   const handleOk = async () => {
@@ -57,8 +76,8 @@ function Index() {
     // Fetch new points from user
   };
   const handleCancel = () => {
-    console.log('Clicked cancel button');
     setOpen(false);
+    setOpenLoginModal(false);
   };
 
   // eslint-disable-next-line
@@ -106,6 +125,29 @@ function Index() {
         >
           <p>{modalText}</p>
         </Modal>
+
+        <Modal
+          title="Login or register to unlock photos"
+          open={openLoginModal}
+          onCancel={handleCancel}
+          footer={[
+            <Button key="cancel" onClick={handleCancel}>
+              Cancel
+            </Button>,
+            <Button
+              key="submit"
+              type="primary"
+              onClick={() => handleRegister()}
+            >
+              Register
+            </Button>,
+            <Button type="primary" onClick={() => handleLogin()}>
+              Login
+            </Button>,
+          ]}
+        >
+          <p>You have to be logged in to unlock photos</p>
+        </Modal>
         <InfiniteScroll
           dataLength={posts.length} //This is important field to render the next data
           next={dataFetch}
@@ -117,25 +159,6 @@ function Index() {
             </p>
           }
         >
-          <ul>
-            <li>DODAJ FORGOT PASSWORD</li>
-            <li>DODAJ CONFIRM ACCOUNT</li>
-            <li>DODAJ RESET PASWORD</li>
-            <li>SKLOINI UPLOAD SLIKA ZA DRUGE</li>
-            <li>DODAJ ROLE</li>
-            <li>
-              DODAJ RESTRICT TO AKO JE IZLOGOVAN i KLIKNE DA KUPI SLIKU, POSALJI
-              GA NA LOGIN STRANU
-            </li>
-            <li>
-              Move function for getting aws images to utils since its used in
-              two files
-            </li>
-            <li> PREBACI POINTS DA BUDE COINS UBACI</li>
-            <li> LOGO ADD SEND EMAIL TO THE OWNER</li>
-            <li>Dodaj sockete</li>
-            <li> Namesti deploy</li>
-          </ul>
           {posts.map((post) => {
             return (
               <Row key={post.id} className="itemsRow">
@@ -145,7 +168,7 @@ function Index() {
                       <Card>
                         {PostItem.status === 'locked' &&
                         PostItem.ownsItem === false ? (
-                          <div className="ant-image css-ixblex css-dev-only-do-not-override-ixblex">
+                          <div className="ant-image css-ixblex css-dev-only-do-not-override-ixblex css-dev-only-do-not-override-gvrybj">
                             <img
                               className="ant-image-img locked"
                               src={PostItem.publicUrl}
@@ -155,7 +178,11 @@ function Index() {
                             <div
                               key={PostItem.id}
                               className="ant-image-mask"
-                              onClick={() => showBuyModal(PostItem.id)}
+                              onClick={() =>
+                                isLoggedIn
+                                  ? showBuyModal(PostItem.id)
+                                  : showLoginModal()
+                              }
                             >
                               <div className="ant-image-mask-info">
                                 <LockOutlined />

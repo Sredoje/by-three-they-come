@@ -1,14 +1,15 @@
-import { Row, Col, message } from 'antd';
+import { Row, Col, message, theme } from 'antd';
 import './buyPoints.css';
 import CoinbaseCommerceButton from 'react-coinbase-commerce';
 import 'react-coinbase-commerce/dist/coinbase-commerce-button.css';
 import PaymentApi from '../../api/paymentApi';
 import { useContext } from 'react';
 import PointsContext from '../../context/pointsContext';
-
+const { useToken } = theme;
 function BuyPoints() {
   const { success, error } = message;
   const { setPoints } = useContext(PointsContext);
+  const { token } = useToken();
   const onChargeSuccess = async (messageData) => {
     let response = await PaymentApi.processPayment(messageData);
     setPoints(response.points);
@@ -39,6 +40,7 @@ function BuyPoints() {
             onModalClosed={onModalClosed}
             checkoutId={process.env.REACT_APP_CHECKOUT_ID}
             className="buy-button"
+            style={{ backgroundColor: token.colorPrimary }}
           />
         </div>
       </Col>
