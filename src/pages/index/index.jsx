@@ -165,30 +165,34 @@ function Index() {
                 {post.PostItems.map((PostItem) => {
                   return (
                     <Col span={6} key={'col' + PostItem.id}>
-                      <Card>
+                      <Card
+                        style={{
+                          margin: '0',
+                        }}
+                      >
                         {PostItem.status === 'locked' &&
                         PostItem.ownsItem === false ? (
-                          <div className="ant-image css-ixblex css-dev-only-do-not-override-ixblex css-dev-only-do-not-override-gvrybj">
-                            <img
-                              className="ant-image-img locked"
-                              src={PostItem.publicUrl}
-                              key={PostItem.key}
-                              width={300}
-                            ></img>
+                          <div className="unlockedWrapper">
                             <div
                               key={PostItem.id}
-                              className="ant-image-mask"
+                              className="unlockedMask"
                               onClick={() =>
                                 isLoggedIn
                                   ? showBuyModal(PostItem.id)
                                   : showLoginModal()
                               }
                             >
-                              <div className="ant-image-mask-info">
-                                <LockOutlined />
-                                Unlock
+                              <div className="unlocked-mask">
+                                <LockOutlined /> Unlock
                               </div>
                             </div>
+                            <img
+                              className="ant-image-img locked"
+                              src={PostItem.publicUrl}
+                              key={PostItem.key}
+                              width={300}
+                              alt=""
+                            ></img>
                           </div>
                         ) : (
                           <Image key={PostItem.key} src={PostItem.publicUrl} />

@@ -21,3 +21,7 @@
 /* .pointsMenuItem {
   font-weight: bold;
 } */
+.ant-menu-title-content a {
+  width: 100%;
+  display: block;
+}

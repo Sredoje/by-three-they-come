@@ -20,7 +20,6 @@ function CreateNewPost() {
   const [previewImage, setPreviewImage] = useState('');
   const [previewTitle, setPreviewTitle] = useState('');
   const [fileList, setFileList] = useState([]);
-
   let createNewPostDisabled = fileList.length < 3 ? true : false;
   const handleCancel = () => setPreviewOpen(false);
   const handlePreview = async (file) => {

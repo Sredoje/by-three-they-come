@@ -27,3 +27,30 @@
   box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.03),
     0 1px 6px -1px rgba(0, 0, 0, 0.02), 0 2px 4px 0 rgba(0, 0, 0, 0.02);
 }
+.ant-card .ant-card-body {
+  padding: 17px;
+}
+.unlockedWrapper {
+  position: relative;
+}
+.unlockedWrapper img {
+  width: 100%;
+}
+.unlockedMask {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  opacity: 0;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  background: rgba(0, 0, 0, 0.5);
+  cursor: pointer;
+  transition: opacity 0.3s;
+}
+.unlockedMask:hover {
+  opacity: 1;
+}

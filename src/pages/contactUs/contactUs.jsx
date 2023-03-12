@@ -20,7 +20,7 @@ function ContactUs() {
         </h2>
       </Row>
       <Row align="center" className="loginRow">
-        <Col span={5}>
+        <Col>
           <Form
             name="basic"
             initialValues={{ remember: true }}
@@ -70,7 +70,11 @@ function ContactUs() {
               <Input.TextArea placeholder="Message" size="large" />
             </Form.Item>
             <Form.Item>
-              <Button type="primary" htmlType="submit">
+              <Button
+                type="primary"
+                htmlType="submit"
+                className="contactUsSubmit"
+              >
                 Submit
               </Button>
             </Form.Item>
