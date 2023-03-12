@@ -30,6 +30,12 @@
 .ant-card .ant-card-body {
   padding: 17px;
 }
+@media only screen and (max-width: 576px) {
+  .ant-card .ant-card-body {
+    padding: 7px;
+  }
+}
+
 .unlockedWrapper {
   position: relative;
 }
