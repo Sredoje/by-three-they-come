@@ -83,7 +83,7 @@ function Index() {
   // eslint-disable-next-line
   const dataFetch = async () => {
     const offset = posts.length;
-    await new Promise((r) => setTimeout(r, 50000));
+
     const data = await PostApi.fetchIndexPosts(offset);
     if (data.posts.length === 0) {
       setHasMore(false);
