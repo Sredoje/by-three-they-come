@@ -14,6 +14,11 @@
   margin-top: 5px;
   fill: hotpink;
 }
+@media only screen and (max-width: 576px) {
+  .indexLogo {
+    display: none;
+  }
+}
 
 .rightSide.ant-menu-item {
   margin-left: auto;
