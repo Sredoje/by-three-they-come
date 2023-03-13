@@ -18,6 +18,9 @@
   .indexLogo {
     display: none;
   }
+  .ant-layout .ant-layout-header {
+    padding-inline: 0px;
+  }
 }
 
 .rightSide.ant-menu-item {
