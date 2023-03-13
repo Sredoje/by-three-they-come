@@ -28,10 +28,11 @@ function BuyPoints() {
   const onModalClosed = () => {};
   return (
     <Row align="center" className="pointsRow">
-      <Col span={5}>
+      <Col>
         <div align="center">
-          <br></br>
-          <h2 align="center">Click on the button to buy 2000 points!</h2>
+          <h2 align="center" className="buyHeader">
+            Click on the button to buy 2000 points!
+          </h2>
           <CoinbaseCommerceButton
             align="center"
             onChargeSuccess={onChargeSuccess}
