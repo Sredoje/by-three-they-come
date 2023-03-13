@@ -1,4 +1,4 @@
-import { Row, Col, Modal, Image, Card, message, Button } from 'antd';
+import { Row, Col, Modal, Image, Card, message, Button, Spin } from 'antd';
 import React, { useState, useEffect, useContext } from 'react';
 import './index.css';
 import PostApi from '../../api/postApi';
@@ -83,7 +83,7 @@ function Index() {
   // eslint-disable-next-line
   const dataFetch = async () => {
     const offset = posts.length;
-
+    await new Promise((r) => setTimeout(r, 50000));
     const data = await PostApi.fetchIndexPosts(offset);
     if (data.posts.length === 0) {
       setHasMore(false);
@@ -152,7 +152,9 @@ function Index() {
           dataLength={posts.length} //This is important field to render the next data
           next={dataFetch}
           hasMore={hasMore}
-          loader={<h4>Loading...</h4>}
+          loader={
+            <Spin tip="Loading" size="large" className="indexLoader"></Spin>
+          }
           endMessage={
             <p style={{ textAlign: 'center' }}>
               <b>Yay! You have seen it all</b>
