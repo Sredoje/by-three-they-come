@@ -79,6 +79,7 @@ function ContactUs() {
               </Button>
             </Form.Item>
           </Form>
+          <p>or email us at bythreetheycomemailer@gmail.com</p>
         </Col>
       </Row>
     </>

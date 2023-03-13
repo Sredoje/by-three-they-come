@@ -75,3 +75,6 @@
   margin-top: 30vh;
   width: 100px; /* Need a specific value to work */
 }
+body {
+  background-color: #f5f5f5;
+}
