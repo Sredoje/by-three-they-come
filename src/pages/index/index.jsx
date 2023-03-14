@@ -10,6 +10,7 @@ import PointsContext from '../../context/pointsContext';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import LoggedInContext from '../../context/loggedInContext';
 import { useNavigate } from 'react-router-dom';
+import Blur from 'react-blur';
 // import Blur from 'react-blur';
 
 function Index() {
@@ -188,13 +189,14 @@ function Index() {
                                 <LockOutlined /> Unlock
                               </div>
                             </div>
-                            <img
+                            {/* <img
                               className="ant-image-img locked"
                               src={PostItem.publicUrl}
                               key={PostItem.key}
                               width={300}
                               alt=""
-                            ></img>
+                            ></img> */}
+                            <Blur blurRadius={5} img={PostItem.publicUrl} />
                           </div>
                         ) : (
                           <Image key={PostItem.key} src={PostItem.publicUrl} />
